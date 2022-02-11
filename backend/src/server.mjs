@@ -11,11 +11,34 @@ import multer from 'multer';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+let dropData = undefined;
+fs.readFile("./data/RewardsDummyData.json", "utf8", (err, data) => {
+    console.log(err)
+    console.log(data)
+    dropData = data;
+});
+
 const app = express();
 app.use(express.static(path.join(__dirname, '/build')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
+
+app.get('/api/twitchDrops', async (req, res) => {
+    res.send(dropData);
+    // try{
+    //     const client = await MongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true})
+    //     const db = client.db("movies");
+
+    //     const movieInfo = await db.collection('movies').find({}).toArray();
+    //     console.log(movieInfo);
+    //     res.status(200).json(movieInfo);
+    //     client.close();
+    // }
+    // catch (error) {
+    //     res.status(500).json({message: "Error connceting to db", error});
+    // }
+});
 
 app.get('*', (req, res) => { res.sendFile(path.join(__dirname + '/build/index.html'))})
 app.listen(8000, () => console.log("listening on port 8000"));
