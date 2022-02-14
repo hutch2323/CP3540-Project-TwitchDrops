@@ -23,11 +23,22 @@ const __dirname = dirname(__filename);
 //     dropData = data;
 // });
 
+let faqData = undefined;
+fs.readFile("./data/faqs.json", "utf8", (err, data) => {
+    console.log(err)
+    console.log(faqData)
+    faqData = data;
+});
+
 const app = express();
 app.use(express.static(path.join(__dirname, '/build')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
+
+app.get('/api/testFAQ', async (req, res) => {
+    res.send(faqData);
+});
 
 // GET API route to grab active twitch drops
 app.get('/api/activeTwitchDrops', async (req, res) => {
@@ -165,6 +176,32 @@ app.post('/api/overwriteDrops', async (req, res) => {
             await db.collection("twitchDrops").deleteMany({});
             await db.collection("twitchDrops").insertMany(dropData);
             res.status(200).json({message:"Success", dropData: req.body});
+            client.close();
+        }
+        catch (error) {
+            res.status(500).json({message: "Error connceting to db", error});
+        }
+    } else {
+        res.status(500).json({message: "Invalid API Key"});
+    }
+    
+});
+
+// POST API route to overwrite all drops
+app.post('/api/overwriteFAQ', async (req, res) => {
+    // hard coded API key. This will need to be checked against the API in database rather than a visible string
+    const apiKey = "ef72570ff371408f9668e414353b7b2e";
+    console.log(req.headers);
+
+    if (req.headers.apikey == apiKey) {
+        try{
+            let faqData = req.body
+            const client = await MongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true})
+            const db = client.db("TwitchDropsApp");
+
+            await db.collection("twitchDrops").deleteMany({});
+            await db.collection("twitchDrops").insertMany(faqData);
+            res.status(200).json({message:"Success", faqData: req.body});
             client.close();
         }
         catch (error) {

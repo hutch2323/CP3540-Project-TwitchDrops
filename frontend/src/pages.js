@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Navbar, Nav, Row, Col, Image } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { TwitchDrops } from './App';
+import { TwitchDrops, PastDrops, FAQ } from './App';
 
 export function Current({twitchDrops=[]}) {
     console.log("Current:")
@@ -41,6 +41,7 @@ export function Past({TwitchDrops=[]}) {
             </Container>
             <Container className="py-5">
                 <Container className="py-5 bg-light rounded-3">
+                    {/* Use <PastDrops /> when setting up map */}
                     Past drops test.
                 </Container>
             </Container>
@@ -49,7 +50,7 @@ export function Past({TwitchDrops=[]}) {
     )
 }
 
-export function FAQ({faqData=[]}) {
+export function FAQS({faqs=[]}) {
     return (
         <>
             <Container>
@@ -62,7 +63,7 @@ export function FAQ({faqData=[]}) {
             </Container>
             <Container className="py-5">
                 <Container className="p-5 bg-light rounded-3">
-                    FAQ drops test.
+                { faqs.map((faq, i) => { return <FAQ key={i} info={faq} />}) }
                 </Container>
             </Container>
             <Footer />
