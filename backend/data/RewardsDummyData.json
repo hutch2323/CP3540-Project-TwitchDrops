@@ -4,21 +4,32 @@
       "item_name": "Pink Hair",
       "item_icon": "https://projectwinter.co/steam_inventory/i_PinkHair.png",
       "itemdefid": 1535,
-      "unlock_condition": "15 minutes"
+      "unlock_condition": "15 minutes",
+      "status": "active"
     },
     { 
       "streamer_name" : "CoachStock",
       "item_name": "Pink Hair",
       "item_icon": "https://projectwinter.co/steam_inventory/i_PinkHair.png",
       "itemdefid": 1535,
-      "unlock_condition": "15 minutes"
+      "unlock_condition": "15 minutes",
+      "status": "active"
     },
     { 
       "streamer_name" : "CoachStock",
       "item_name": "Pink Hair",
       "item_icon": "https://projectwinter.co/steam_inventory/i_PinkHair.png",
       "itemdefid": 1535,
-      "unlock_condition": "15 minutes"
+      "unlock_condition": "15 minutes",
+      "status": "active"
+    },
+    { 
+      "streamer_name" : "CoachStock",
+      "item_name": "Pink Hair",
+      "item_icon": "https://projectwinter.co/steam_inventory/i_PinkHair.png",
+      "itemdefid": 1535,
+      "unlock_condition": "15 minutes",
+      "status": "inactive"
     }
 ]
       

@@ -1,17 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
+import { Routes, Route } from 'react-router-dom';
+import { Container, Image } from 'react-bootstrap';
 import { BsClock } from "react-icons/bs"; 
-import {Home, Faqs, PageNotFound } from "./pages"
-import { Routes, Route } from "react-router-dom"
+import { Current, Past, FAQ } from "./pages";
 
 function App() {
 
   const [twitchDrops, setTwitchDrops] = useState([]);
 
   useEffect(() => {
-    fetch('/api/twitchDrops')
+    fetch('/api/activeTwitchDrops', {
+      method: "GET",
+      withCredentials: true,
+      headers: {
+        "apiKey": "ef72570ff371408f9668e414353b7b2e",
+        "Content-Type": "application/json"
+      }
+    })
       .then((response) => response.json())
       .then(setTwitchDrops)
   }, []);
@@ -20,16 +27,17 @@ function App() {
 
   return (
 
-    <div>
-      <Routes>
-        <Route path="/" element={<Home twitchDrops={twitchDrops} setTwitchDrops={setTwitchDrops} />}/>
-        <Route path="/faqs" element={<Faqs twitchDrops={twitchDrops} setTwitchDrops={setTwitchDrops} />}/>
-        <Route path="*" element={<PageNotFound />}/>
-      </Routes>
+    <div className="App">
+      <Container>
+        <Routes>
+          <Route path="/" element={<Current twitchDrops={twitchDrops}/>}/>
+          <Route path="/pastdrops" element={<Past />}/>
+          <Route path="/faq" element={<FAQ />}/>
+        </Routes>
+      </Container>
     </div>
     
   );
 }
-
 
 export default App;
