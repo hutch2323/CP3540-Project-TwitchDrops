@@ -39,7 +39,14 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetch('/api/testFAQ')
+    fetch('/api/faqs', {
+      method: "GET",
+      withCredentials: true,
+      headers: {
+        "apiKey": "ef72570ff371408f9668e414353b7b2e",
+        "Content-Type": "application/json"
+      }
+    })
       .then((response) => response.json())
       .then(setFAQS)
   }, []);

@@ -10,7 +10,7 @@ import multer from 'multer';
 
 /* 
 DB Name: TwitchDropsApp
-Collections: twitchDrops, faq, apiKeys
+Collections: twitchDrops, faqs, apiKeys
 */
 
 const __filename = fileURLToPath(import.meta.url);
@@ -23,12 +23,12 @@ const __dirname = dirname(__filename);
 //     dropData = data;
 // });
 
-let faqData = undefined;
-fs.readFile("./data/faqs.json", "utf8", (err, data) => {
-    console.log(err)
-    console.log(faqData)
-    faqData = data;
-});
+// let faqData = undefined;
+// fs.readFile("./data/faqs.json", "utf8", (err, data) => {
+//     console.log(err)
+//     console.log(faqData)
+//     faqData = data;
+// });
 
 const app = express();
 app.use(express.static(path.join(__dirname, '/build')));
@@ -36,9 +36,9 @@ app.use(express.static(path.join(__dirname, '/build')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.get('/api/testFAQ', async (req, res) => {
-    res.send(faqData);
-});
+// app.get('/api/testFAQ', async (req, res) => {
+//     res.send(faqData);
+// });
 
 // GET API route to grab active twitch drops
 app.get('/api/activeTwitchDrops', async (req, res) => {
@@ -99,7 +99,7 @@ app.get('/api/faqs', async (req, res) => {
             const client = await MongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true})
             const db = client.db("TwitchDropsApp");
 
-            const faqs = await db.collection('faq').find({}).toArray();
+            const faqs = await db.collection('faqs').find({}).toArray();
             console.log(faqs);
             res.status(200).json(faqs);
             client.close();
@@ -138,7 +138,7 @@ app.put('/api/updateTwitchDrop', async (req, res) => {
 });
 
 // PUT API route to update an faq
-app.put('/api/updateTwitchDrop', async (req, res) => {
+app.put('/api/updateFAQ', async (req, res) => {
     // hard coded API key. This will need to be checked against the API in database rather than a visible string
     const apiKey = "ef72570ff371408f9668e414353b7b2e";
     console.log(req.headers);
@@ -149,7 +149,7 @@ app.put('/api/updateTwitchDrop', async (req, res) => {
             const client = await MongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true})
             const db = client.db("TwitchDropsApp");
 
-            await db.collection("faq").updateOne({question: faqData.question}, {$set: {faqData}})
+            await db.collection("faqs").updateOne({question: faqData.question}, {$set: {faqData}})
             res.status(200).json({message:"Success", faqData: req.body});
             client.close();
         }
@@ -188,7 +188,7 @@ app.post('/api/overwriteDrops', async (req, res) => {
 });
 
 // POST API route to overwrite all drops
-app.post('/api/overwriteFAQ', async (req, res) => {
+app.post('/api/overwriteFAQS', async (req, res) => {
     // hard coded API key. This will need to be checked against the API in database rather than a visible string
     const apiKey = "ef72570ff371408f9668e414353b7b2e";
     console.log(req.headers);
@@ -199,8 +199,8 @@ app.post('/api/overwriteFAQ', async (req, res) => {
             const client = await MongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true})
             const db = client.db("TwitchDropsApp");
 
-            await db.collection("twitchDrops").deleteMany({});
-            await db.collection("twitchDrops").insertMany(faqData);
+            await db.collection("faqs").deleteMany({});
+            await db.collection("faqs").insertMany(faqData);
             res.status(200).json({message:"Success", faqData: req.body});
             client.close();
         }
