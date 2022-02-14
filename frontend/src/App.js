@@ -3,6 +3,8 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import { BsClock } from "react-icons/bs"; 
+import {Home, Faqs, PageNotFound } from "./pages"
+import { Routes, Route } from "react-router-dom"
 
 function App() {
 
@@ -17,27 +19,17 @@ function App() {
   if( twitchDrops == null) return null;
 
   return (
-    <div className="App">
-      <Container className="bg-light">
-        <h1>Twitch Drops</h1>
-        { twitchDrops.map((twitchDrop, i) => { return <TwitchDrops key={i} info={twitchDrop}></TwitchDrops>}) }
-      </Container>
+
+    <div>
+      <Routes>
+        <Route path="/" element={<Home twitchDrops={twitchDrops} setTwitchDrops={setTwitchDrops} />}/>
+        <Route path="/faqs" element={<Faqs twitchDrops={twitchDrops} setTwitchDrops={setTwitchDrops} />}/>
+        <Route path="*" element={<PageNotFound />}/>
+      </Routes>
     </div>
+    
   );
 }
 
-function TwitchDrops(props) {
-  console.log(props);
-  return (
-    <>
-      <div style={{display: "inline-block", margin: "2em"}}>
-        <h2 className="mt-5">{props.info.streamer_name}</h2>
-        <img rounded="true" src={props.info.item_icon}></img>
-        <h3 className="fs-4 text-start">{props.info.item_name}</h3>
-        <p><BsClock style={{paddingRight: "5px"}}/>{props.info.unlock_condition}</p>
-      </div>
-    </>
-  )
-}
 
 export default App;

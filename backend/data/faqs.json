@@ -1,0 +1,19 @@
+[
+    { 
+      "id" : "1",
+      "question": "Where can I see my Twitch drops?",
+      "answer": "You can view your Twitch Drops on the Inventory page. https://www.twitch.tv/drops/inventory"
+      
+    },
+    { 
+      "id" : "2",
+      "question": "I no longer have access to the Twitch account I linked my Steam account to and want to link a new one. What do I do?",
+      "answer": "You can unlink your old Twitch account by signing in with Steam on this page and then clicking the Unlink Account button. Then you will be able to link your accounts normally again."
+      
+    },
+    { 
+      "id" : "3",
+      "question": "Where to download Project Winter?",
+      "answer": "https://store.steampowered.com/app/774861/Project_Winter/"
+    } 
+]
