@@ -1,8 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
+import { Routes, Route } from 'react-router-dom';
+import { Container, Image } from 'react-bootstrap';
 import { BsClock } from "react-icons/bs"; 
+import { Current, Past, FAQ } from "./pages";
 
 function App() {
 
@@ -18,25 +20,26 @@ function App() {
 
   return (
     <div className="App">
-      <Container className="bg-light">
-        <h1>Twitch Drops</h1>
-        { twitchDrops.map((twitchDrop, i) => { return <TwitchDrops key={i} info={twitchDrop}></TwitchDrops>}) }
+      <Container>
+        <Routes>
+          <Route path="/" element={<Current twitchDrops={twitchDrops}/>}/>
+          <Route path="/pastdrops" element={<Past />}/>
+          <Route path="/faq" element={<FAQ />}/>
+        </Routes>
       </Container>
     </div>
   );
 }
 
-function TwitchDrops(props) {
+export function TwitchDrops(props) {
   console.log(props);
   return (
-    <>
-      <div style={{display: "inline-block", margin: "2em"}}>
-        <h2 className="mt-5">{props.info.streamer_name}</h2>
-        <img rounded="true" src={props.info.item_icon}></img>
-        <h3 className="fs-4 text-start">{props.info.item_name}</h3>
-        <p><BsClock style={{paddingRight: "5px"}}/>{props.info.unlock_condition}</p>
-      </div>
-    </>
+    <Container className="text-light border-primary rounded-3 p-3" style={{backgroundColor: "blue"}}>
+      <h2 className="mt-5">{props.info.streamer_name}</h2>
+      <Image src={props.info.item_icon} thumbnail="true" />
+      <h3 className="fs-4 text-start">{props.info.item_name}</h3>
+      <p><BsClock style={{paddingRight: "5px"}}/>{props.info.unlock_condition}</p>
+    </Container>
   )
 }
 
