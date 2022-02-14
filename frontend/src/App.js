@@ -1,8 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import { BsClock } from "react-icons/bs"; 
+import { Current } from "./pages";
 
 function App() {
 
@@ -18,15 +20,16 @@ function App() {
 
   return (
     <div className="App">
-      <Container className="bg-light">
-        <h1>Twitch Drops</h1>
-        { twitchDrops.map((twitchDrop, i) => { return <TwitchDrops key={i} info={twitchDrop}></TwitchDrops>}) }
+      <Container>
+        <Routes>
+          <Route path="/" element={<Current drops={twitchDrops}/>}/>
+        </Routes>
       </Container>
     </div>
   );
 }
 
-function TwitchDrops(props) {
+export function TwitchDrops(props) {
   console.log(props);
   return (
     <>
