@@ -26,6 +26,7 @@ function App() {
   if( twitchDrops == null) return null;
 
   return (
+
     <div className="App">
       <Container>
         <Routes>
@@ -35,19 +36,8 @@ function App() {
         </Routes>
       </Container>
     </div>
+    
   );
-}
-
-export function TwitchDrops(props) {
-  console.log(props);
-  return (
-    <Container className="text-light border-primary rounded-3 p-3" style={{backgroundColor: "blue"}}>
-      <h2 className="mt-5">{props.info.streamer_name}</h2>
-      <Image src={props.info.item_icon} thumbnail="true" />
-      <h3 className="fs-4 text-start">{props.info.item_name}</h3>
-      <p><BsClock style={{paddingRight: "5px"}}/>{props.info.unlock_condition}</p>
-    </Container>
-  )
 }
 
 export default App;
