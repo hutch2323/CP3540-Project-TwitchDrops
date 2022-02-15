@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Container, Image } from 'react-bootstrap';
+import { Container, Row, Image, CardGroup, Card } from 'react-bootstrap';
 import { BsClock } from "react-icons/bs"; 
 import { Current, Past, FAQS } from "./pages";
 
@@ -90,7 +90,7 @@ const calculateTimeLeft = () => {
 export function TwitchDrops(props) {
   console.log(props);
   return (
-    <Container className="text-light border-primary rounded-3 p-3" style={{backgroundColor: "blue"}}>
+    <Container className="text-light border-primary rounded-3 p-2 m-1" style={{backgroundColor: "blue"}}>
       <h2 className="mt-5">{props.info.streamer_name}</h2>
       <Image src={props.info.item_icon} thumbnail="true" />
       <h3 className="fs-4 text-start">{props.info.item_name}</h3>
@@ -102,12 +102,33 @@ export function TwitchDrops(props) {
 export function PastDrops(props) {
   return (
       <div>
-          <Container className="bg-light rounded-3 p-3">
-            <h3 className="mt-5">{props.info.question}</h3>
-            {props.info.answer}
-          </Container>
+          <CardGroup>
+            <Card>
+                <Card.Img variant="top" src={props.info.item_icon}  />
+                <Card.Body>
+                <Card.Title>{props.info.item_name}</Card.Title>
+                <Card.Text>
+                <p>Streamer Name: {props.info.streamer_name}</p>
+                <p>How Long to Watch: {props.info.unlock_condition} </p>
+                </Card.Text>
+                </Card.Body>
+            </Card>
+          </CardGroup>  
       </div>
   );
+}
+
+export function FAQ(props){
+  return(
+    <Container style={{ padding:"15px"}}>
+      <Row>
+          <h4>{props.info.question}</h4>
+      </Row>
+      <Row>
+          <p>{props.info.answer}</p>
+      </Row>
+    </Container>
+  )
 }
 
 export default App;
