@@ -66,45 +66,7 @@ function App() {
     </div>
       );
     }
-    
-    export function TwitchDrops(props) {
-      console.log(props);
-      return (
-        <Container className="text-light border-primary rounded-3 p-3" style={{backgroundColor: "blue"}}>
-          <h2 className="mt-5">{props.info.streamer_name}</h2>
-          <Image src={props.info.item_icon} thumbnail="true" />
-          <h3 className="fs-4 text-start">{props.info.item_name}</h3>
-          <p><BsClock style={{paddingRight: "5px"}}/>{props.info.unlock_condition}</p>
-        </Container>
-      )
-    }
 
 export default App;
 
-export function TwitchDrops(props) {
-  console.log(props);
-  return (
-    <Container className="text-light border-primary rounded-3 p-3" style={{backgroundColor: "blue"}}>
-      {/* will need to be changed to react-bootstrap */}
-      <div style={{display: "inline-block", margin: "2em"}}>
-        <h2 className="mt-5">{props.info.streamer_name}</h2>
-        <img rounded="true" src={props.info.item_icon}></img>
-        <h3 className="fs-4 text-center">{props.info.item_name}</h3>
-        <p><BsClock style={{paddingRight: "5px"}}/>{props.info.unlock_condition}</p>
-      </div>
-    </Container>
-  )
-}
 
-export function PastDrops(props) {
-}
-
-export function FAQ(props) {
-  console.log(props);
-
-  return (
-      <div>
-          <h1>FAQS</h1> 
-      </div>
-  );
-}

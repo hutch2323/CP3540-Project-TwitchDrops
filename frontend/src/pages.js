@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Navbar, Nav, Row, Col, Image } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { TwitchDrops, PastDrops, FAQ } from './App';
+
 
 export function Current({twitchDrops=[]}) {
     console.log("Current:")
@@ -19,7 +19,15 @@ export function Current({twitchDrops=[]}) {
             <Container className="py-5">
                 <Container className="p-5 bg-light rounded-3">
                     <Row md="auto">
-                    { twitchDrops.map((twitchDrop, i) => { return <TwitchDrops key={i} info={twitchDrop} />}) }
+                      {/*} { twitchDrops.map((twitchDrop, i) => { return <twitchDrops key={i} info={twitchDrop} />}) } */}
+                      {twitchDrops.map( (twitchDrop) => (
+                        <div>
+                            <p>Streamer Name: {twitchDrop.streamer_name}</p>
+                            <p>Item Name: {twitchDrop.item_name}</p>
+                            <img src= {twitchDrop.item_icon} />
+                        </div>   
+                      ))}
+                           
                     </Row>
                 </Container>
             </Container>
@@ -28,7 +36,7 @@ export function Current({twitchDrops=[]}) {
     )
 }
 
-export function Past({TwitchDrops=[]}) {
+export function Past({pastDrops=[]}) {
     return (
         <>
             <Container>
@@ -63,7 +71,7 @@ export function FAQS({faqs=[]}) {
             </Container>
             <Container className="py-5">
                 <Container className="p-5 bg-light rounded-3">
-                { faqs.map((faq, i) => { return <FAQ key={i} info={faq} />}) }
+             {/*}   { faqs.map((faq, i) => { return <FAQ key={i} info={faq} />}) } */}
                 </Container>
             </Container>
             <Footer />
