@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import Countdown from 'react-countdown';
 
 
-export function Current({twitchDrops=[]}, {timeLeft}) {
+export function Current({twitchDrops=[], timeLeft=[]}) {
     console.log("Current:")
     console.log(twitchDrops)
     console.log("Pages", timeLeft)
@@ -19,6 +19,9 @@ export function Current({twitchDrops=[]}, {timeLeft}) {
                     <Navigation />
                 </Row>
             </Container>
+            <Container class="text-danger" style={{ padding:"20px"}}>
+                <h4>Days: {timeLeft.days}, Hours: {timeLeft.hours}, Minutes: {timeLeft.minutes}, Seconds: {timeLeft.seconds}</h4>
+            </Container>  
             <Container className="py-5">
                 <Container className="p-5 bg-light rounded-3">
                     <Row xs={1} md={3} className="g-4">
