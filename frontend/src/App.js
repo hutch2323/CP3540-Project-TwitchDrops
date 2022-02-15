@@ -58,8 +58,8 @@ function App() {
       setTimeLeft(calculateTimeLeft())
     }, 1000);
   });
+  
   return (
-
     <div className="App">
       <Container>
         <Routes>
@@ -71,8 +71,6 @@ function App() {
     </div>
       );
     }
-
-export default App;
 
 const calculateTimeLeft = () => {
   let year = new Date().getFullYear();
@@ -87,6 +85,28 @@ const calculateTimeLeft = () => {
     };
   }
   return timeLeft;
+    
+export function TwitchDrops(props) {
+  console.log(props);
+  return (
+    <Container className="text-light border-primary rounded-3 p-3" style={{backgroundColor: "blue"}}>
+      <h2 className="mt-5">{props.info.streamer_name}</h2>
+      <Image src={props.info.item_icon} thumbnail="true" />
+      <h3 className="fs-4 text-start">{props.info.item_name}</h3>
+      <p><BsClock style={{paddingRight: "5px"}}/>{props.info.unlock_condition}</p>
+    </Container>
+  )
 }
 
+export function PastDrops(props) {
+  return (
+      <div>
+          <Container className="bg-light rounded-3 p-3">
+            <h3 className="mt-5">{props.info.question}</h3>
+            {props.info.answer}
+          </Container>
+      </div>
+  );
+}
 
+export default App;
