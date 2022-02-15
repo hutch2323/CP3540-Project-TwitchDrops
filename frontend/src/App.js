@@ -53,12 +53,23 @@ function App() {
 
   // if( twitchDrops == null) return null;
 
+  const [timeLeft, setTimeLeft] = useState([]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTimeLeft(calculateTimeLeft())
+ 
+    }, 1000);
+    console.log("timer", calculateTimeLeft())
+
+    return calculateTimeLeft()
+  });
   return (
 
     <div className="App">
       <Container>
         <Routes>
-          <Route path="/" element={<Current twitchDrops={twitchDrops}/>}/>
+          <Route path="/" element={<Current twitchDrops={twitchDrops} timeLeft={timeLeft}/>}/>
           <Route path="/pastdrops" element={<Past pastDrops={pastDrops}/>}/>
           <Route path="/faq" element={<FAQS faqs={faqs}/>}/>
         </Routes>
@@ -68,5 +79,22 @@ function App() {
     }
 
 export default App;
+
+const calculateTimeLeft = () => {
+  let year = new Date().getFullYear();
+  let difference = +new Date(`10/01/${year}`) - +new Date();
+
+  let timeLeft = {};
+
+  if (difference > 0) {
+    timeLeft = {
+      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((difference / 1000 / 60) % 60),
+      seconds: Math.floor((difference / 1000) % 60)
+    };
+  }
+  return timeLeft;
+}
 
 

@@ -1,11 +1,14 @@
 import React from 'react';
-import { Container, Navbar, Nav, Row, Col, Image } from 'react-bootstrap';
+import { Container, Navbar, Nav, Row, Col, Image, CardGroup, Card } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import ReactDOM from 'react-dom';
+import Countdown from 'react-countdown';
 
 
-export function Current({twitchDrops=[]}) {
+export function Current({twitchDrops=[]}, {timeLeft}) {
     console.log("Current:")
     console.log(twitchDrops)
+    console.log("Pages", timeLeft)
     return (
         <>
             <Container>
@@ -18,16 +21,22 @@ export function Current({twitchDrops=[]}) {
             </Container>
             <Container className="py-5">
                 <Container className="p-5 bg-light rounded-3">
-                    <Row md="auto">
+                    <Row xs={1} md={3} className="g-4">
                       {/*} { twitchDrops.map((twitchDrop, i) => { return <twitchDrops key={i} info={twitchDrop} />}) } */}
-                      {twitchDrops.map( (twitchDrop) => (
-                        <div>
-                            <p>Streamer Name: {twitchDrop.streamer_name}</p>
-                            <p>Item Name: {twitchDrop.item_name}</p>
-                            <img src= {twitchDrop.item_icon} />
-                        </div>   
-                      ))}
-                           
+                        {twitchDrops.map( (twitchDrop) => (
+                            <CardGroup>
+                            <Card>
+                                <Card.Img variant="top" src={twitchDrop.item_icon}  />
+                                <Card.Body>
+                                <Card.Title>{twitchDrop.item_name}</Card.Title>
+                                <Card.Text>
+                                <p>Streamer Name: {twitchDrop.streamer_name}</p>
+                                <p>How Long to Watch: {twitchDrop.unlock_condition} </p>
+                                </Card.Text>
+                                </Card.Body>
+                            </Card>
+                            </CardGroup>
+                        ))}     
                     </Row>
                 </Container>
             </Container>
@@ -35,8 +44,9 @@ export function Current({twitchDrops=[]}) {
         </>
     )
 }
-
 export function Past({pastDrops=[]}) {
+    console.log("Current:")
+    console.log(pastDrops)
     return (
         <>
             <Container>
@@ -49,8 +59,22 @@ export function Past({pastDrops=[]}) {
             </Container>
             <Container className="py-5">
                 <Container className="py-5 bg-light rounded-3">
-                    {/* Use <PastDrops /> when setting up map */}
-                    Past drops test.
+                    <Row xs={1} md={3} className="g-4">
+                        {pastDrops.map( (drop) => (
+                            <CardGroup>
+                            <Card>
+                                <Card.Img variant="top" src={drop.item_icon}  />
+                                <Card.Body>
+                                <Card.Title>{drop.item_name}</Card.Title>
+                                <Card.Text>
+                                <p>Streamer Name: {drop.streamer_name}</p>
+                                <p>How Long to Watch: {drop.unlock_condition} </p>
+                                </Card.Text>
+                                </Card.Body>
+                            </Card>
+                            </CardGroup>  
+                        ))}
+                    </Row>
                 </Container>
             </Container>
             <Footer />
@@ -59,6 +83,8 @@ export function Past({pastDrops=[]}) {
 }
 
 export function FAQS({faqs=[]}) {
+    console.log("Current:")
+    console.log(faqs)
     return (
         <>
             <Container>
@@ -69,9 +95,22 @@ export function FAQS({faqs=[]}) {
                     <Navigation />
                 </Row>
             </Container>
+            <Container style={{ padding:"20px"}}>
+                <h2>FAQS</h2>
+            </Container>
             <Container className="py-5">
                 <Container className="p-5 bg-light rounded-3">
-             {/*}   { faqs.map((faq, i) => { return <FAQ key={i} info={faq} />}) } */}
+                    {/*}   { faqs.map((faq, i) => { return <FAQ key={i} info={faq} />}) } */}
+                    {faqs.map( (faq) => (
+                        <Container style={{ padding:"15px"}}>
+                        <Row>
+                            <h4>{faq.question}</h4>
+                        </Row>
+                        <Row>
+                            <p>{faq.answer}</p>
+                        </Row>
+                        </Container>
+                    ))}
                 </Container>
             </Container>
             <Footer />
