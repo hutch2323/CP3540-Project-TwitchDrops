@@ -1,7 +1,7 @@
 import React from 'react';
+import { BsClock } from "react-icons/bs"; 
 import { Container, Navbar, Nav, Row, Col, Image } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { TwitchDrops, PastDrops, FAQ } from './App';
 
 export function Current({twitchDrops=[]}) {
     console.log("Current:")
@@ -19,7 +19,14 @@ export function Current({twitchDrops=[]}) {
             <Container className="py-5">
                 <Container className="p-5 bg-light rounded-3">
                     <Row md="auto">
-                    { twitchDrops.map((twitchDrop, i) => { return <TwitchDrops key={i} info={twitchDrop} />}) }
+                    { twitchDrops.map((twitchDrop) => (
+                        <Container className="text-light border-primary rounded-3 p-3" style={{backgroundColor: "blue"}}>
+                        <h2 className="mt-5">{twitchDrop.streamer_name}</h2>
+                        <Image src={twitchDrop.item_icon} thumbnail="true" />
+                        <h3 className="fs-4">{twitchDrop.item_name}</h3>
+                        <p><BsClock style={{paddingRight: "5px"}}/>{twitchDrop.unlock_condition}</p>
+                      </Container>
+                    ))}
                     </Row>
                 </Container>
             </Container>
@@ -63,7 +70,12 @@ export function FAQS({faqs=[]}) {
             </Container>
             <Container className="py-5">
                 <Container className="p-5 bg-light rounded-3">
-                { faqs.map((faq, i) => { return <FAQ key={i} info={faq} />}) }
+                { faqs.map((faq) => (
+                    <Container>
+                        <h4>{faq.question}</h4>
+                            <p>{faq.answer}</p>
+                    </Container>
+                ))}
                 </Container>
             </Container>
             <Footer />
