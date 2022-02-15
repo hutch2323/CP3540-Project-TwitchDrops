@@ -85,6 +85,7 @@ const calculateTimeLeft = () => {
     };
   }
   return timeLeft;
+}
     
 export function TwitchDrops(props) {
   console.log(props);
