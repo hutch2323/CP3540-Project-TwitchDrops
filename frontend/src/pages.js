@@ -3,6 +3,7 @@ import { Container, Navbar, Nav, Row, Col, Image, CardGroup, Card } from 'react-
 import { LinkContainer } from 'react-router-bootstrap';
 import ReactDOM from 'react-dom';
 import Countdown from 'react-countdown';
+import { TwitchDrops, PastDrops, FAQ } from './App';
 
 
 export function Current({twitchDrops=[], timeLeft=[]}) {
@@ -25,21 +26,8 @@ export function Current({twitchDrops=[], timeLeft=[]}) {
             <Container className="py-5">
                 <Container className="p-5 bg-light rounded-3">
                     <Row xs={1} md={3} className="g-4">
-                      {/*} { twitchDrops.map((twitchDrop, i) => { return <twitchDrops key={i} info={twitchDrop} />}) } */}
-                        {twitchDrops.map( (twitchDrop) => (
-                            <CardGroup>
-                            <Card>
-                                <Card.Img variant="top" src={twitchDrop.item_icon}  />
-                                <Card.Body>
-                                <Card.Title>{twitchDrop.item_name}</Card.Title>
-                                <Card.Text>
-                                <p>Streamer Name: {twitchDrop.streamer_name}</p>
-                                <p>How Long to Watch: {twitchDrop.unlock_condition} </p>
-                                </Card.Text>
-                                </Card.Body>
-                            </Card>
-                            </CardGroup>
-                        ))}     
+                        { twitchDrops.map((twitchDrop, i) => { return <TwitchDrops key={i} info={twitchDrop} />}) }
+                        
                     </Row>
                 </Container>
             </Container>
@@ -63,20 +51,7 @@ export function Past({pastDrops=[]}) {
             <Container className="py-5">
                 <Container className="py-5 bg-light rounded-3">
                     <Row xs={1} md={3} className="g-4">
-                        {pastDrops.map( (drop) => (
-                            <CardGroup>
-                            <Card>
-                                <Card.Img variant="top" src={drop.item_icon}  />
-                                <Card.Body>
-                                <Card.Title>{drop.item_name}</Card.Title>
-                                <Card.Text>
-                                <p>Streamer Name: {drop.streamer_name}</p>
-                                <p>How Long to Watch: {drop.unlock_condition} </p>
-                                </Card.Text>
-                                </Card.Body>
-                            </Card>
-                            </CardGroup>  
-                        ))}
+                        {pastDrops.map( (drop, i) => { return <PastDrops key={i} info={drop} />}) }
                     </Row>
                 </Container>
             </Container>
@@ -104,16 +79,7 @@ export function FAQS({faqs=[]}) {
             <Container className="py-5">
                 <Container className="p-5 bg-light rounded-3">
                     {/*}   { faqs.map((faq, i) => { return <FAQ key={i} info={faq} />}) } */}
-                    {faqs.map( (faq) => (
-                        <Container style={{ padding:"15px"}}>
-                        <Row>
-                            <h4>{faq.question}</h4>
-                        </Row>
-                        <Row>
-                            <p>{faq.answer}</p>
-                        </Row>
-                        </Container>
-                    ))}
+                    {faqs.map( (faq, i) => { return <FAQ key={i} info={faq} />}) }
                 </Container>
             </Container>
             <Footer />
