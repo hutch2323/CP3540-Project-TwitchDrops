@@ -88,7 +88,7 @@ const calculateTimeLeft = () => {
 }
     
 export function TwitchDrops(props) {
-  console.log(props);
+  // console.log(props);
   return (
     <Container className="text-light border-primary rounded-3 p-2 m-1" style={{backgroundColor: "blue"}}>
       <h2 className="mt-5">{props.info.streamer_name}</h2>
@@ -106,11 +106,13 @@ export function PastDrops(props) {
             <Card>
                 <Card.Img variant="top" src={props.info.item_icon}  />
                 <Card.Body>
-                <Card.Title>{props.info.item_name}</Card.Title>
-                <Card.Text>
-                <p>Streamer Name: {props.info.streamer_name}</p>
-                <p>How Long to Watch: {props.info.unlock_condition} </p>
-                </Card.Text>
+                  <Card.Title>{props.info.item_name}</Card.Title>
+                  <Card.Text>
+                    Streamer Name: {props.info.streamer_name}
+                  </Card.Text>
+                  <Card.Text>
+                    How Long to Watch: {props.info.unlock_condition}
+                  </Card.Text>
                 </Card.Body>
             </Card>
           </CardGroup>  
@@ -125,7 +127,7 @@ export function FAQ(props){
           <h4>{props.info.question}</h4>
       </Row>
       <Row>
-          <p>{props.info.answer}</p>
+          <p style={{overflowWrap:"break-word"}}>{props.info.answer}</p>
       </Row>
     </Container>
   )
