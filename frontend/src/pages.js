@@ -94,7 +94,7 @@ export function FAQS({faqs=[]}) {
 export function Title() {
     return (
         <Container className="pt-2" style={{backgroundColor: "blue" , color: "white"}}>
-            <Image src="images/WinterLogoLong_White_large.png" height={50} className="float-start" />
+            <Image src="images/WinterLogoLong_White_Large.png" height={50} className="float-start" />
         </Container>
     )
 }
