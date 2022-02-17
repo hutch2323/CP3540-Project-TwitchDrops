@@ -1,6 +1,7 @@
 [
     { 
       "streamer_name" : "CoachStock",
+      "streamer_account" : "https://www.twitch.tv/coachstock",
       "item_name": "Pink Hair",
       "item_icon": "https://projectwinter.co/steam_inventory/i_PinkHair.png",
       "itemdefid": 1535,
@@ -9,6 +10,7 @@
     },
     { 
       "streamer_name" : "CoachStock",
+      "streamer_account" : "https://www.twitch.tv/coachstock",
       "item_name": "Pink Hair",
       "item_icon": "https://projectwinter.co/steam_inventory/i_PinkHair.png",
       "itemdefid": 1535,
@@ -17,6 +19,7 @@
     },
     { 
       "streamer_name" : "CoachStock",
+      "streamer_account" : "https://www.twitch.tv/coachstock",
       "item_name": "Pink Hair",
       "item_icon": "https://projectwinter.co/steam_inventory/i_PinkHair.png",
       "itemdefid": 1535,
@@ -25,6 +28,7 @@
     },
     { 
       "streamer_name" : "CoachStock",
+      "streamer_account" : "https://www.twitch.tv/coachstock",
       "item_name": "Pink Hair",
       "item_icon": "https://projectwinter.co/steam_inventory/i_PinkHair.png",
       "itemdefid": 1535,

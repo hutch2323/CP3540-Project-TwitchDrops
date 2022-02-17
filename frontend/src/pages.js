@@ -3,11 +3,11 @@ import { Container, Navbar, Nav, Row, Col, Image, CardGroup, Card, Collapse, But
 import { LinkContainer } from 'react-router-bootstrap';
 import ReactDOM from 'react-dom';
 import Countdown from 'react-countdown';
-import { TwitchDrops, PastDrops, FAQ } from './App';
+import { TwitchDrops, PastDrops, FutureDrops, FAQ } from './App';
 
 export function Current({twitchDrops=[], timeLeft=[]}) {
     // console.log("Current:")
-    // console.log(twitchDrops)
+    console.log(twitchDrops[0].drops)
     // console.log("Pages", timeLeft)
     return (
         <>
@@ -19,14 +19,15 @@ export function Current({twitchDrops=[], timeLeft=[]}) {
                     <Navigation />
                 </Row>
             </Container>
+            <h2 className="pt-5">Current Drops</h2>
             <Container className="text-danger" style={{ padding:"20px"}}>
-                <h3>Next Event:</h3>
+                <h3>Time remaining to watch!!!!</h3>
                 <h4>Days: {timeLeft.days}, Hours: {timeLeft.hours}, Minutes: {timeLeft.minutes}, Seconds: {timeLeft.seconds}</h4>
             </Container>  
             <Container className="py-3">
                 <Container className="p-5 bg-light rounded-3">
                     <Row xs={1} md={3} className="g-4 justify-content-center">
-                        { twitchDrops.map((twitchDrop, i) => { return <TwitchDrops key={i} info={twitchDrop} />}) }
+                        { twitchDrops[0].drops.map((twitchDrop, i) => { return <TwitchDrops key={i} info={twitchDrop} />}) }
                         
                     </Row>
                 </Container>
@@ -54,7 +55,35 @@ export function Past({pastDrops=[]}) {
             <Container className="py-5">
                 <Container className="py-5 bg-light rounded-3">
                     <Row xs={1} md={3} className="g-4 justify-content-center">
-                        {pastDrops.map( (drop, i) => { return <PastDrops key={i} info={drop} />}) }
+                        {pastDrops[0].drops.map( (drop, i) => { return <PastDrops key={i} info={drop} />}) }
+                    </Row>
+                </Container>
+            </Container>
+            <Footer />
+        </>
+    )
+}
+
+export function Future({futureDrops=[]}) {
+    // console.log("Current:")
+    // console.log(pastDrops)
+    return (
+        <>
+            <Container>
+                <Row>
+                    <Title />
+                </Row>
+                <Row>
+                    <Navigation />
+                </Row>
+            </Container>
+            <Container>
+                <h2 className="pt-5">Future Drops</h2>
+            </Container>
+            <Container className="py-5">
+                <Container className="py-5 bg-light rounded-3">
+                    <Row xs={1} md={3} className="g-4 justify-content-center">
+                        {futureDrops[0].drops.map( (drop, i) => { return <FutureDrops key={i} info={drop} />}) }
                     </Row>
                 </Container>
             </Container>
@@ -187,6 +216,11 @@ export function Navigation() {
                             <Nav.Item>
                                 <LinkContainer to="/pastdrops">
                                     <Nav.Link>Past Drops</Nav.Link>
+                                </LinkContainer>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <LinkContainer to="/futureDrops">
+                                    <Nav.Link>Future Drops</Nav.Link>
                                 </LinkContainer>
                             </Nav.Item>
                             <Nav.Item>
