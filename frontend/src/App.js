@@ -1,16 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import { Container, Row, Image, CardGroup, Card } from 'react-bootstrap';
 import { BsClock } from "react-icons/bs"; 
-import { Current, Past, FAQS, Accounts } from "./pages";
+import { Current, Past, Future, FAQS, Accounts } from "./pages";
 
 function App() {
 
-  const [twitchDrops, setTwitchDrops] = useState([]);
-  const [pastDrops, setPastDrops] = useState([]);
-  const [futureDrops, setFutureDrops] = useState([]);
+  const [twitchDrops, setTwitchDrops] = useState(null);
+  const [pastDrops, setPastDrops] = useState(null);
+  const [futureDrops, setFutureDrops] = useState(null);
   const [faqs, setFAQS] = useState([]);
 
   useEffect(() => {
@@ -44,13 +44,17 @@ function App() {
       .then(setFAQS)
   }, []);
 
-  // if( twitchDrops == null) return null;
+  
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
   useEffect(() => {
     const timer = setTimeout(() => {
       setTimeLeft(calculateTimeLeft())
     }, 1000);
   });
+
+  if( twitchDrops == null) return null;
+  if( pastDrops == null) return null;
+  if( futureDrops == null) return null;
   
   return (
     <div className="App">
@@ -58,6 +62,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Current twitchDrops={twitchDrops} timeLeft={timeLeft}/>}/>
           <Route path="/pastdrops" element={<Past pastDrops={pastDrops}/>}/>
+          <Route path="/futureDrops" element={<Future futureDrops={futureDrops}/>}/>
           <Route path="/faq" element={<FAQS faqs={faqs}/>}/>
           <Route path="/linkaccounts" element={<Accounts />} />
         </Routes>
@@ -82,14 +87,21 @@ const calculateTimeLeft = () => {
 }
     
 export function TwitchDrops(props) {
-  console.log(props);
+
+  //console.log("testing", props);
+  console.log(props.info.streamer_account)
   return (
-    <Container className="text-light border-primary rounded-3 p-2 m-1" style={{backgroundColor: "blue"}}>
-      <h2 className="mt-5">{props.info.streamer_name}</h2>
-      <Image src={props.info.item_icon} thumbnail="true" />
-      <h3 className="fs-4">{props.info.item_name}</h3>
-      <p><BsClock style={{paddingRight: "5px"}}/>{props.info.unlock_condition}</p>
-    </Container>
+    <Container className="text-light border-primary rounded-3 p-2 m-1" style={{ backgroundColor: "blue" }}>
+     
+     
+
+
+        <h2 className="mt-5" href={props.info.streamer_account}>{props.info.streamer_name}</h2>
+        <Image src={props.info.item_icon} thumbnail="true" />
+        <h3 className="fs-4">{props.info.item_name}</h3>
+        <p><BsClock style={{ paddingRight: "5px" }} />{props.info.unlock_condition}</p>
+        <a href={props.info.streamer_account}><button type="button" class="btn btn-secondary">View {props.info.streamer_name}'s Page</button></a>
+      </Container>
   )
 }
 
@@ -102,11 +114,34 @@ export function PastDrops(props) {
                 <Card.Body>
                   <Card.Title>{props.info.item_name}</Card.Title>
                   <Card.Text>
-                    Streamer Name: {props.info.streamer_name}
+                    Streamer: {props.info.streamer_name}
                   </Card.Text>
                   <Card.Text>
                     How Long to Watch: {props.info.unlock_condition}
                   </Card.Text>
+                  <a href={props.info.streamer_account}><button type="button" class="btn btn-secondary">View {props.info.streamer_name}'s Page</button></a>
+                </Card.Body>
+            </Card>
+          </CardGroup>  
+      </div>
+  );
+}
+
+export function FutureDrops(props) {
+  return (
+      <div>
+          <CardGroup>
+            <Card>
+                <Card.Img variant="top" src={props.info.item_icon}  />
+                <Card.Body>
+                  <Card.Title>{props.info.item_name}</Card.Title>
+                  <Card.Text>
+                    Streamer: {props.info.streamer_name}
+                  </Card.Text>
+                  <Card.Text>
+                    How Long to Watch: {props.info.unlock_condition}
+                  </Card.Text>
+                  <a href={props.info.streamer_account}><button type="button" class="btn btn-secondary">View {props.info.streamer_name}'s Page</button></a>
                 </Card.Body>
             </Card>
           </CardGroup>  
