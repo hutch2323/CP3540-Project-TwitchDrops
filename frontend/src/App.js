@@ -10,10 +10,11 @@ function App() {
 
   const [twitchDrops, setTwitchDrops] = useState([]);
   const [pastDrops, setPastDrops] = useState([]);
+  const [futureDrops, setFutureDrops] = useState([]);
   const [faqs, setFAQS] = useState([]);
 
   useEffect(() => {
-    fetch('/api/activeTwitchDrops', {
+    fetch('/api/currentTwitchDrops', {
       method: "GET",
       withCredentials: true,
       headers: {
@@ -26,27 +27,19 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetch('/api/inactiveTwitchDrops', {
-      method: "GET",
-      withCredentials: true,
-      headers: {
-        "apiKey": "ef72570ff371408f9668e414353b7b2e",
-        "Content-Type": "application/json"
-      }
-    })
+    fetch('/api/pastTwitchDrops')
       .then((response) => response.json())
       .then(setPastDrops)
   }, []);
 
   useEffect(() => {
-    fetch('/api/faqs', {
-      method: "GET",
-      withCredentials: true,
-      headers: {
-        "apiKey": "ef72570ff371408f9668e414353b7b2e",
-        "Content-Type": "application/json"
-      }
-    })
+    fetch('/api/futureTwitchDrops')
+      .then((response) => response.json())
+      .then(setFutureDrops)
+  }, []);
+
+  useEffect(() => {
+    fetch('/api/faqs')
       .then((response) => response.json())
       .then(setFAQS)
   }, []);
@@ -89,7 +82,7 @@ const calculateTimeLeft = () => {
 }
     
 export function TwitchDrops(props) {
-  // console.log(props);
+  console.log(props);
   return (
     <Container className="text-light border-primary rounded-3 p-2 m-1" style={{backgroundColor: "blue"}}>
       <h2 className="mt-5">{props.info.streamer_name}</h2>
