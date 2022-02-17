@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Container, Row, Image, CardGroup, Card } from 'react-bootstrap';
 import { BsClock } from "react-icons/bs"; 
-import { Current, Past, FAQS } from "./pages";
+import { Current, Past, FAQS, Accounts } from "./pages";
 
 function App() {
 
@@ -66,6 +66,7 @@ function App() {
           <Route path="/" element={<Current twitchDrops={twitchDrops} timeLeft={timeLeft}/>}/>
           <Route path="/pastdrops" element={<Past pastDrops={pastDrops}/>}/>
           <Route path="/faq" element={<FAQS faqs={faqs}/>}/>
+          <Route path="/linkaccounts" element={<Accounts />} />
         </Routes>
       </Container>
     </div>
@@ -93,7 +94,7 @@ export function TwitchDrops(props) {
     <Container className="text-light border-primary rounded-3 p-2 m-1" style={{backgroundColor: "blue"}}>
       <h2 className="mt-5">{props.info.streamer_name}</h2>
       <Image src={props.info.item_icon} thumbnail="true" />
-      <h3 className="fs-4 text-start">{props.info.item_name}</h3>
+      <h3 className="fs-4">{props.info.item_name}</h3>
       <p><BsClock style={{paddingRight: "5px"}}/>{props.info.unlock_condition}</p>
     </Container>
   )

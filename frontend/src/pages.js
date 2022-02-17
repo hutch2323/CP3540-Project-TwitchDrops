@@ -1,10 +1,9 @@
-import React from 'react';
-import { Container, Navbar, Nav, Row, Col, Image, CardGroup, Card } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Container, Navbar, Nav, Row, Col, Image, CardGroup, Card, Collapse, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import ReactDOM from 'react-dom';
 import Countdown from 'react-countdown';
 import { TwitchDrops, PastDrops, FAQ } from './App';
-
 
 export function Current({twitchDrops=[], timeLeft=[]}) {
     // console.log("Current:")
@@ -82,8 +81,81 @@ export function FAQS({faqs=[]}) {
             </Container>
             <Container>
                 <Container className="p-5 bg-light rounded-3">
-                    {/*}   { faqs.map((faq, i) => { return <FAQ key={i} info={faq} />}) } */}
-                    {faqs.map( (faq, i) => { return <FAQ key={i} info={faq} />}) }
+                    {faqs.map( (faq, i) => { return <FAQ key={i} info={faq} />})}
+                </Container>
+            </Container>
+            <Footer />
+        </>
+    )
+}
+
+export function Accounts({signedIn=[]}) {
+    const [step1, setStep1] = useState(true);
+    const [step2, setStep2] = useState(false);
+    const [step3, setStep3] = useState(false);
+    const [final, setFinal] = useState(false);
+
+    return (
+        <>
+            <Container>
+                <Row>
+                    <Title />
+                </Row>
+                <Row>
+                    <Navigation />
+                </Row>
+            </Container>
+            <Container className="py-3">
+                <Container className="p-5 bg-light rounded-3">
+                    <Row>
+                        <Collapse in={step1}>
+                            <div id="sign-in">
+                                <h4><b>Step 1</b>: sign in to your Twitch account</h4>
+                                <Button
+                                    onClick={() => {setStep1(!step1); setStep2(!step2)}}
+                                    aria-controls="sign-in"
+                                    aria-expanded={step1}
+                                >
+                                    Sign-in
+                                </Button>
+                            </div>
+                        </Collapse>
+                    </Row>
+                    <Row>
+                        <Collapse in={step2}>
+                            <div id="link">
+                                <h4><b>Step 2</b>: Link your account</h4>
+                                <Button
+                                onClick={() => {setStep2(!step2); setStep3(!step3)}}
+                                aria-controls="link"
+                                aria-expanded={step2}
+                                >
+                                    Link
+                                </Button>
+                            </div>
+                        </Collapse>
+                    </Row>
+                    <Row>
+                        <Collapse in={step3}>
+                            <div in="activate">
+                                <h4><b>Step 3</b>: Activate Twitch Drops for Project Winter</h4>
+                                <Button
+                                onClick={() => {setStep3(!step3); setFinal(!final)}}
+                                aria-controls="activate"
+                                aria-expanded={step3}
+                                >
+                                    Activate
+                                </Button>
+                                </div>
+                        </Collapse>
+                    </Row>
+                    <Row>
+                        <Collapse in={final}>
+                            <div in="final">
+                                <h4>Congratulations, Project Winter Twitch Drops have been activated on your account!</h4>
+                            </div>
+                        </Collapse>
+                    </Row>
                 </Container>
             </Container>
             <Footer />
