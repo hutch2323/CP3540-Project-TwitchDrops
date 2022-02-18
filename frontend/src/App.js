@@ -46,16 +46,17 @@ function App() {
   }, []);
 
   
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const [timeLeft, setTimeLeft] = useState(null);
   useEffect(() => {
     const timer = setTimeout(() => {
-      setTimeLeft(calculateTimeLeft())
+      setTimeLeft(calculateTimeLeft(twitchDrops))
     }, 1000);
   });
 
   if( twitchDrops == null) return null;
   if( pastDrops == null) return null;
   if( futureDrops == null) return null;
+  if( timeLeft == null) return null;
   
   return (
     <div className="App">
@@ -72,9 +73,11 @@ function App() {
       );
     }
 
-const calculateTimeLeft = () => {
+const calculateTimeLeft = (twitchDrops) => {
+  console.log(twitchDrops[0].end_date)
+ 
   let year = new Date().getFullYear();
-  let difference = +new Date(`03/04/${year}`) - +new Date();
+  let difference = +new Date(twitchDrops[0].end_date) - +new Date();
   let timeLeft = {};
   if (difference > 0) {
     timeLeft = {
@@ -88,9 +91,8 @@ const calculateTimeLeft = () => {
 }
     
 export function TwitchDrops(props) {
-
   //console.log("testing", props);
-  console.log(props.info.streamer_account)
+  //console.log(props.info.streamer_account)
   return (
     <div>
       <CardGroup>
