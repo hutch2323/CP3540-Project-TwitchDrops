@@ -7,11 +7,11 @@ import { TwitchDrops, PastDrops, FutureDrops, FAQ } from './App';
 
 export function Current({twitchDrops=[], timeLeft=[]}) {
     // console.log("Current:")
-    console.log(twitchDrops[0].drops)
+    // console.log(twitchDrops[0].drops)
     // console.log("Pages", timeLeft)
     return (
         <>
-            <Container>
+            <Container fluid>
                 <Row>
                     <Title />
                 </Row>
@@ -19,13 +19,16 @@ export function Current({twitchDrops=[], timeLeft=[]}) {
                     <Navigation />
                 </Row>
             </Container>
-            <h2 className="pt-5">Current Drops</h2>
+            {/* <h2 className="pt-5">Current Drops</h2> */}
+            <Container>
+                <img src="images/twitchDrops.png" />
+            </Container>
             <Container className="text-danger" style={{ padding:"20px"}}>
                 <h3>Time remaining to watch!!!!</h3>
                 <h4>Days: {timeLeft.days}, Hours: {timeLeft.hours}, Minutes: {timeLeft.minutes}, Seconds: {timeLeft.seconds}</h4>
             </Container>  
             <Container className="py-3">
-                <Container className="p-5 bg-light rounded-3">
+                <Container className="p-5 rounded-3">
                     <Row xs={1} md={3} className="g-4 justify-content-center">
                         { twitchDrops[0].drops.map((twitchDrop, i) => { return <TwitchDrops key={i} info={twitchDrop} />}) }
                         
@@ -43,7 +46,7 @@ export function Past({pastDrops=[]}) {
     let endString = EndStringDate(pastDrops)
     return (
         <>
-            <Container>
+            <Container fluid>
                 <Row>
                     <Title />
                 </Row>
@@ -77,7 +80,7 @@ export function Future({futureDrops=[]}) {
 
     return (
         <>
-            <Container>
+            <Container fluid>
                 <Row>
                     <Title />
                 </Row>
@@ -107,7 +110,7 @@ export function FAQS({faqs=[]}) {
     // console.log(faqs)
     return (
         <>
-            <Container>
+            <Container fluid>
                 <Row>
                     <Title />
                 </Row>
@@ -136,7 +139,7 @@ export function Accounts({signedIn=[]}) {
 
     return (
         <>
-            <Container>
+            <Container fluid>
                 <Row>
                     <Title />
                 </Row>
@@ -204,16 +207,16 @@ export function Accounts({signedIn=[]}) {
 
 export function Title() {
     return (
-        <Container className="pt-2" style={{backgroundColor: "blue" , color: "white"}}>
-            <Image src="images/WinterLogoLong_White_Large.png" height={50} className="float-start" />
+        <Container className="pt-2" style={{backgroundColor: "#2B2452" , color: "white"}}>
+            <Image src="images/WinterLogoLong_White_Large.png" height="50" width="auto" className="float-start" />
         </Container>
     )
 }
 
 export function Navigation() {
     return (
-        <Container style={{backgroundColor: "blue" , color: "white"}}>
-            <Navbar variant="dark" style={{backgroundColor: "blue" , color: "white"}} collapseOnSelect expand="sm">
+        <Container style={{backgroundColor: "#2B2452" , color: "white", fontFamily:"Timeless-Normal", fontSize:"24px"}}>
+            <Navbar variant="dark" style={{backgroundColor: "#2B2452" , color: "white", fontFamily:"Timeless-Normal"}} collapseOnSelect expand="sm">
                 <Container>
                     <Navbar.Toggle aria-controls='response-navbar-nav' />
                     <Navbar.Collapse id='response-navbar-nav'>
@@ -253,7 +256,7 @@ export function Navigation() {
 
 export function Footer() {
     return (
-        <Container className="p-3" style={{backgroundColor: "blue" , color: "white"}}>
+        <Container fluid className="p-3" style={{backgroundColor: "#2B2452" , color: "white"}}>
             <Row>
                 <Col>
                 Social Media Links

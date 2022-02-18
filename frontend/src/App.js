@@ -15,14 +15,7 @@ function App() {
   const [faqs, setFAQS] = useState([]);
 
   useEffect(() => {
-    fetch('/api/currentTwitchDrops', {
-      method: "GET",
-      withCredentials: true,
-      headers: {
-        "apiKey": "ef72570ff371408f9668e414353b7b2e",
-        "Content-Type": "application/json"
-      }
-    })
+    fetch('/api/currentTwitchDrops')
       .then((response) => response.json())
       .then(setTwitchDrops)
   }, []);
@@ -60,7 +53,7 @@ function App() {
   
   return (
     <div className="App">
-      <Container>
+      <Container fluid className="p-0" style={{background:"url(images/websitebg.png)"}}>
         <Routes>
           <Route path="/" element={<Current twitchDrops={twitchDrops} timeLeft={timeLeft}/>}/>
           <Route path="/pastdrops" element={<Past pastDrops={pastDrops}/>}/>
@@ -91,14 +84,12 @@ const calculateTimeLeft = (twitchDrops) => {
 }
     
 export function TwitchDrops(props) {
-  //console.log("testing", props);
-  //console.log(props.info.streamer_account)
   return (
     <div>
-      <CardGroup>
-        <Card>
+      <CardGroup style={{borderRadius:"0.5rem",boxShadow:"0.5rem 0.5rem 1rem #2B2452"}}>
+        <Card style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
           <Card.Img variant="top" src={props.info.item_icon} />
-          <Card.Body>
+          <Card.Body style={{}}>
             <Card.Title>{props.info.item_name}</Card.Title>
             <Card.Text>
             Streamer: {props.info.streamer_name}
@@ -107,7 +98,7 @@ export function TwitchDrops(props) {
             <BsClock style={{ paddingRight: "5px" }} /> How Long to Watch: {props.info.unlock_condition}
             </Card.Text>
           </Card.Body>
-          <a href={props.info.streamer_account}><button type="button" class="btn btn-secondary">View {props.info.streamer_name}'s Page</button></a>
+          <a href={props.info.streamer_account}><button type="button" className="btn btn-secondary">View {props.info.streamer_name}'s Page</button></a>
         </Card>
       </CardGroup>
     </div>
@@ -128,7 +119,7 @@ export function PastDrops(props) {
                   <Card.Text>
                   <BsClock style={{ paddingRight: "5px" }} /> How Long to Watch: {props.info.unlock_condition}
                   </Card.Text>
-                  <a href={props.info.streamer_account}><button type="button" class="btn btn-secondary">View {props.info.streamer_name}'s Page</button></a>
+                  <a href={props.info.streamer_account}><button type="button" className="btn btn-secondary">View {props.info.streamer_name}'s Page</button></a>
                 </Card.Body>
             </Card>
           </CardGroup>  
@@ -150,7 +141,7 @@ export function FutureDrops(props) {
                   <Card.Text>
                   <BsClock style={{ paddingRight: "5px" }} /> How Long to Watch: {props.info.unlock_condition}
                   </Card.Text>
-                  <a href={props.info.streamer_account}><button type="button" class="btn btn-secondary">View {props.info.streamer_name}'s Page</button></a>
+                  <a href={props.info.streamer_account}><button type="button" className="btn btn-secondary">View {props.info.streamer_name}'s Page</button></a>
                 </Card.Body>
             </Card>
           </CardGroup>  
