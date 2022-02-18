@@ -3,7 +3,7 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import { Container, Row, Image, CardGroup, Card } from 'react-bootstrap';
-import { BsClock } from "react-icons/bs"; 
+import { BsFillClockFill } from "react-icons/bs"; 
 import { Current, Past, Future, FAQS, Accounts } from "./pages";
 import CardHeader from 'react-bootstrap/esm/CardHeader';
 
@@ -42,6 +42,7 @@ function App() {
   const [timeLeft, setTimeLeft] = useState(null);
   useEffect(() => {
     const timer = setTimeout(() => {
+      if( twitchDrops == null) return null;
       setTimeLeft(calculateTimeLeft(twitchDrops))
     }, 1000);
   });
@@ -53,7 +54,7 @@ function App() {
   
   return (
     <div className="App">
-      <Container fluid className="p-0" style={{background:"url(images/websitebg.png)"}}>
+      <Container fluid className="p-0">
         <Routes>
           <Route path="/" element={<Current twitchDrops={twitchDrops} timeLeft={timeLeft}/>}/>
           <Route path="/pastdrops" element={<Past pastDrops={pastDrops}/>}/>
@@ -67,7 +68,7 @@ function App() {
     }
 
 const calculateTimeLeft = (twitchDrops) => {
-  console.log(twitchDrops[0].end_date)
+  // console.log(twitchDrops[0].end_date)
  
   let year = new Date().getFullYear();
   let difference = +new Date(twitchDrops[0].end_date) - +new Date();
@@ -86,19 +87,20 @@ const calculateTimeLeft = (twitchDrops) => {
 export function TwitchDrops(props) {
   return (
     <div>
-      <CardGroup style={{borderRadius:"0.5rem",boxShadow:"0.5rem 0.5rem 1rem #2B2452"}}>
+      <CardGroup style={{borderRadius:"0.5rem",boxShadow:"0.5rem 0.5rem 1rem #2B2452",fontFamily:"Timeless-Normal"}}>
         <Card style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
-          <Card.Img variant="top" src={props.info.item_icon} />
-          <Card.Body style={{}}>
-            <Card.Title>{props.info.item_name}</Card.Title>
+          <Card.Body style={{fontSize:"20px"}}>
+            <Card.Title className="p-2 text-light" style={{backgroundColor:"rgba(43, 36, 82, 0.75)"}}>{(props.info.item_name).toUpperCase()}</Card.Title>
+            <Card.Img variant="top" src={props.info.item_icon} />
             <Card.Text>
-            Streamer: {props.info.streamer_name}
+            {/* Streamer: {props.info.streamer_name} */}
             </Card.Text>
-            <Card.Text>
-            <BsClock style={{ paddingRight: "5px" }} /> How Long to Watch: {props.info.unlock_condition}
+            <Card.Text className="d-flex justify-content-center m-auto">
+              <BsFillClockFill className="m-auto ms-0 me-0" color="rgba(43, 36, 82, 0.75)" size="30px" style={{ paddingRight: "5px" }} />
+              <span className="m-auto ms-0 me-0">Watch Time: {props.info.unlock_condition}</span>
             </Card.Text>
           </Card.Body>
-          <a href={props.info.streamer_account}><button type="button" className="btn btn-secondary">View {props.info.streamer_name}'s Page</button></a>
+          {/* <a href={props.info.streamer_account}><button type="button" className="btn btn-secondary">View {props.info.streamer_name}'s Page</button></a> */}
         </Card>
       </CardGroup>
     </div>
@@ -117,7 +119,7 @@ export function PastDrops(props) {
                     Streamer: {props.info.streamer_name}
                   </Card.Text>
                   <Card.Text>
-                  <BsClock style={{ paddingRight: "5px" }} /> How Long to Watch: {props.info.unlock_condition}
+                  <BsFillClockFill color="#2B2452" size="20px" style={{ paddingRight: "5px" }} />How Long to Watch: {props.info.unlock_condition}
                   </Card.Text>
                   <a href={props.info.streamer_account}><button type="button" className="btn btn-secondary">View {props.info.streamer_name}'s Page</button></a>
                 </Card.Body>
@@ -139,7 +141,7 @@ export function FutureDrops(props) {
                     Streamer: {props.info.streamer_name}
                   </Card.Text>
                   <Card.Text>
-                  <BsClock style={{ paddingRight: "5px" }} /> How Long to Watch: {props.info.unlock_condition}
+                    <BsFillClockFill color="#2B2452" size="20px" style={{ paddingRight: "5px" }} /> How Long to Watch: {props.info.unlock_condition}
                   </Card.Text>
                   <a href={props.info.streamer_account}><button type="button" className="btn btn-secondary">View {props.info.streamer_name}'s Page</button></a>
                 </Card.Body>

@@ -36,3 +36,41 @@
     transform: rotate(360deg);
   }
 }
+
+.imageContainer{
+  display: inline-block;
+  position: relative;
+  width: 60px;
+  height: 60px;
+  margin: 0 25px 0 25px;
+}
+
+.imageHidden {
+  position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity;
+    width: 60px;
+    height: 60px;
+    opacity: 0;
+}
+
+.imageDefault {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity;
+    width: 60px;
+    height: 60px;
+    opacity: 1;
+}
+
+.imageHidden:hover{
+  opacity: 1;
+  display: inline-block;
+}
+
+.imageDefault:hover {
+  opacity: 0;
+  display: none;
+}
