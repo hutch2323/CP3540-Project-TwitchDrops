@@ -40,8 +40,10 @@ export function Current({twitchDrops=[], timeLeft=[]}) {
     )
 }
 export function Past({pastDrops=[]}) {
-    // console.log("Current:")
-    // console.log(pastDrops)
+    //console.log("Current:")
+    //console.log(pastDrops)
+    let startString = StartStringDate(pastDrops)
+    let endString = EndStringDate(pastDrops)
     return (
         <>
             <Container fluid>
@@ -54,6 +56,8 @@ export function Past({pastDrops=[]}) {
             </Container>
             <Container>
                 <h2 className="pt-5">Past Drops</h2>
+                <h4>Was drop was available.</h4>
+                <h4>{startString} to {endString}</h4>
             </Container>
             <Container className="py-5">
                 <Container className="py-5 bg-light rounded-3">
@@ -68,8 +72,12 @@ export function Past({pastDrops=[]}) {
 }
 
 export function Future({futureDrops=[]}) {
-    // console.log("Current:")
-    // console.log(pastDrops)
+    //console.log("Current:")
+    //console.log(futureDrops)
+    //console.log(date.toLocaleDateString("en-US", options))
+    let startString = StartStringDate(futureDrops);
+    let endString = EndStringDate(futureDrops);
+
     return (
         <>
             <Container fluid>
@@ -82,6 +90,8 @@ export function Future({futureDrops=[]}) {
             </Container>
             <Container>
                 <h2 className="pt-5">Future Drops</h2>
+                <h4>Drop will be available on.</h4>
+                <h4>{startString} to {endString}</h4>
             </Container>
             <Container className="py-5">
                 <Container className="py-5 bg-light rounded-3">
@@ -259,4 +269,18 @@ export function Footer() {
             </Row>
         </Container>
     )
+}
+
+function StartStringDate(drops){
+    let options = { year: 'numeric', month: 'long', day: 'numeric' };
+    let dateStart = new Date(drops[0].start_date)
+    let startString = dateStart.toLocaleDateString("en-US", options);
+    return startString;
+}
+
+function EndStringDate(drops){
+    let options = { year: 'numeric', month: 'long', day: 'numeric' };
+    let dateEnd = new Date(drops[0].end_date)
+    let endString = dateEnd.toLocaleDateString("en-US", options);
+    return endString;
 }
