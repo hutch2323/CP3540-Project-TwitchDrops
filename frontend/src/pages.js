@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Navbar, Nav, Row, Col, Image, CardGroup, Card, Collapse, Button } from 'react-bootstrap';
+import { Container, Navbar, Nav, Row, Col, Image, CardGroup, Card, Collapse, Button, } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import ReactDOM from 'react-dom';
 import Countdown from 'react-countdown';
@@ -21,61 +21,66 @@ export function Current({twitchDrops=[], timeLeft=[]}) {
             </Container>
             {/* <h2 className="pt-5">Current Drops</h2> */}
             <Container fluid className="ps-0 pe-0" style={{background:"url(images/websitebg.png)"}}>
-                <Container className="pt-5">
-                    <img src="images/twitchDrops.png" height="auto"/>
+                <Container fluid className="pt-5">
+                    <img src="images/twitchDrops.png" width="100%" style={{maxWidth:"800px"}}/>
                 </Container>
                 <Container fluid className="mt-5" style={{ padding:"20px", backgroundColor:"rgb(43, 36, 82, 0.5)"}}>
                     {/* <h3>Time remaining to watch!!!!</h3> */}
-                    <img src="images/currentEvent.png" height="auto"/>
-                    <Row className="m-auto" style={{maxWidth:"720px"}}>
-                        <Col className="m-2">
+                    <Image src="images/currentEvent.png" width="100%" style={{maxWidth:"800px"}}/>
+                    <Row className="m-auto d-flex justify-content-center" style={{maxWidth:"720px"}}>
+                        <Col className="m-2" style={{maxWidth:"169px", minWidth:"125px"}}>
                             <Row className="d-flex justify-content-center text-light" style={{fontSize:"24px", fontFamily:"Timeless-Normal",
                                 backgroundColor:"#000000"}}>
                                 DAYS
                             </Row>
                             <Row className="d-flex justify-content-center text-light" style={{background:"url(images/thumbnail-image-alpha-small.png)",
                                 backgroundRepeat:"no-repeat", backgroundPosition:"center", lineHeight:"165px", fontSize:"80px",
-                                fontFamily:"Timless-Normal"}}>
+                                fontFamily:"Timless-Normal", backgroundSize:"100% 100%"}}>
                                     {timeLeft.days}
                             </Row>
                         </Col>
-                        <Col className="m-2">
+                        <Col className="m-2" style={{maxWidth:"169px", minWidth:"125px"}}>
                             <Row className="d-flex justify-content-center text-light" style={{fontSize:"24px", fontFamily:"Timeless-Normal",
                                 backgroundColor:"#000000"}}>
                                 HOURS
                             </Row>
                             <Row className="d-flex justify-content-center text-light" style={{background:"url(images/thumbnail-image-alpha-small.png)",
                                 backgroundRepeat:"no-repeat", backgroundPosition:"center", lineHeight:"165px", fontSize:"80px",
-                                fontFamily:"Timless-Normal"}}>
+                                fontFamily:"Timless-Normal", backgroundSize:"100% 100%"}}>
                                     {timeLeft.hours}
                             </Row>
                         </Col>
-                        <Col className="m-2">
+                        <Col className="m-2" style={{maxWidth:"169px", minWidth:"125px"}}>
                             <Row className="d-flex justify-content-center text-light" style={{fontSize:"24px", fontFamily:"Timeless-Normal",
                                 backgroundColor:"#000000"}}>
                                     MINUTES
                             </Row>
                             <Row className="d-flex justify-content-center text-light" style={{background:"url(images/thumbnail-image-alpha-small.png)",
                                 backgroundRepeat:"no-repeat", backgroundPosition:"center", lineHeight:"165px", fontSize:"80px",
-                                fontFamily:"Timless-Normal"}}>
+                                fontFamily:"Timless-Normal", backgroundSize:"100% 100%"}}>
                                     {timeLeft.minutes}
                             </Row>
                         </Col>
-                        <Col className="m-2">
+                        <Col className="m-2" style={{maxWidth:"169px", minWidth:"125px"}}>
                             <Row className="d-flex justify-content-center text-light" style={{fontSize:"24px", fontFamily:"Timeless-Normal",
                                 backgroundColor:"#000000"}}>
                                     SECONDS
                             </Row>
-                            <Row className="d-flex justify-content-center text-light" style={{background:"url(images/thumbnail-image-alpha-small.png)",
+                            <Row>
+                                <Container className="d-flex justify-content-center text-light" style={{background:"url(images/thumbnail-image-alpha-small.png)",
                                 backgroundRepeat:"no-repeat", backgroundPosition:"center", lineHeight:"165px", fontSize:"80px",
-                                fontFamily:"Timless-Normal"}}>
+                                fontFamily:"Timless-Normal", backgroundSize:"100% 100%", maxWidth:"169px"}}>
                                     {timeLeft.seconds}
+                                </Container> 
                             </Row>
                         </Col>
                     </Row>
                 </Container>  
                 <Container className="py-3">
-                <Button href="https://www.twitch.tv/coachstock" variant="outline-*" className="mt-4" style={{background:"url(images/coachStock.png)", width:"325px", height:"75px"}}></Button>
+                    <Container className="" style={{maxWidth:"320px"}}>
+                        <Button href="https://www.twitch.tv/coachstock" variant="outline-*" className="mt-4" style={{background:"url(images/coachStock.png)", backgroundSize:"100% 100%" ,width:"100%", height:"75px"}}></Button>
+                    </Container>
+                
                 
                     <Container className="p-5 rounded-3">
                         <Row xs={1} md={3} className="g-4 justify-content-center">
@@ -258,7 +263,7 @@ export function Accounts({signedIn=[]}) {
 export function Title() {
     return (
         <Container className="d-flex justify-content-center pt-2" style={{backgroundColor: "#2B2452" , color: "white"}}>
-            <Image src="images/WinterLogoLong_White_Large.png" height="50" width="auto" className="float-start" />
+            <Image src="images/WinterLogoLong_White_Large.png" width="100%" className="float-start" style={{maxWidth:"320px"}}/>
         </Container>
     )
 }
