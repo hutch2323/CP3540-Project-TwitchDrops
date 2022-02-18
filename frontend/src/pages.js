@@ -20,19 +20,69 @@ export function Current({twitchDrops=[], timeLeft=[]}) {
                 </Row>
             </Container>
             {/* <h2 className="pt-5">Current Drops</h2> */}
-            <Container>
-                <img src="images/twitchDrops.png" />
-            </Container>
-            <Container className="text-danger" style={{ padding:"20px"}}>
-                <h3>Time remaining to watch!!!!</h3>
-                <h4>Days: {timeLeft.days}, Hours: {timeLeft.hours}, Minutes: {timeLeft.minutes}, Seconds: {timeLeft.seconds}</h4>
-            </Container>  
-            <Container className="py-3">
-                <Container className="p-5 rounded-3">
-                    <Row xs={1} md={3} className="g-4 justify-content-center">
-                        { twitchDrops[0].drops.map((twitchDrop, i) => { return <TwitchDrops key={i} info={twitchDrop} />}) }
-                        
+            <Container fluid className="ps-0 pe-0" style={{background:"url(images/websitebg.png)"}}>
+                <Container className="pt-5">
+                    <img src="images/twitchDrops.png" height="auto"/>
+                </Container>
+                <Container fluid className="mt-5" style={{ padding:"20px", backgroundColor:"rgb(43, 36, 82, 0.5)"}}>
+                    {/* <h3>Time remaining to watch!!!!</h3> */}
+                    <img src="images/currentEvent.png" height="auto"/>
+                    <Row className="m-auto" style={{maxWidth:"720px"}}>
+                        <Col className="m-2">
+                            <Row className="d-flex justify-content-center text-light" style={{fontSize:"24px", fontFamily:"Timeless-Normal",
+                                backgroundColor:"#000000"}}>
+                                DAYS
+                            </Row>
+                            <Row className="d-flex justify-content-center text-light" style={{background:"url(images/thumbnail-image-alpha-small.png)",
+                                backgroundRepeat:"no-repeat", backgroundPosition:"center", lineHeight:"165px", fontSize:"80px",
+                                fontFamily:"Timless-Normal"}}>
+                                    {timeLeft.days}
+                            </Row>
+                        </Col>
+                        <Col className="m-2">
+                            <Row className="d-flex justify-content-center text-light" style={{fontSize:"24px", fontFamily:"Timeless-Normal",
+                                backgroundColor:"#000000"}}>
+                                HOURS
+                            </Row>
+                            <Row className="d-flex justify-content-center text-light" style={{background:"url(images/thumbnail-image-alpha-small.png)",
+                                backgroundRepeat:"no-repeat", backgroundPosition:"center", lineHeight:"165px", fontSize:"80px",
+                                fontFamily:"Timless-Normal"}}>
+                                    {timeLeft.hours}
+                            </Row>
+                        </Col>
+                        <Col className="m-2">
+                            <Row className="d-flex justify-content-center text-light" style={{fontSize:"24px", fontFamily:"Timeless-Normal",
+                                backgroundColor:"#000000"}}>
+                                    MINUTES
+                            </Row>
+                            <Row className="d-flex justify-content-center text-light" style={{background:"url(images/thumbnail-image-alpha-small.png)",
+                                backgroundRepeat:"no-repeat", backgroundPosition:"center", lineHeight:"165px", fontSize:"80px",
+                                fontFamily:"Timless-Normal"}}>
+                                    {timeLeft.minutes}
+                            </Row>
+                        </Col>
+                        <Col className="m-2">
+                            <Row className="d-flex justify-content-center text-light" style={{fontSize:"24px", fontFamily:"Timeless-Normal",
+                                backgroundColor:"#000000"}}>
+                                    SECONDS
+                            </Row>
+                            <Row className="d-flex justify-content-center text-light" style={{background:"url(images/thumbnail-image-alpha-small.png)",
+                                backgroundRepeat:"no-repeat", backgroundPosition:"center", lineHeight:"165px", fontSize:"80px",
+                                fontFamily:"Timless-Normal"}}>
+                                    {timeLeft.seconds}
+                            </Row>
+                        </Col>
                     </Row>
+                </Container>  
+                <Container className="py-3">
+                <Button href="https://www.twitch.tv/coachstock" variant="outline-*" className="mt-4" style={{background:"url(images/coachStock.png)", width:"325px", height:"75px"}}></Button>
+                
+                    <Container className="p-5 rounded-3">
+                        <Row xs={1} md={3} className="g-4 justify-content-center">
+                            { twitchDrops[0].drops.map((twitchDrop, i) => { return <TwitchDrops key={i} info={twitchDrop} />}) }
+                            
+                        </Row>
+                    </Container>
                 </Container>
             </Container>
             <Footer />
@@ -207,7 +257,7 @@ export function Accounts({signedIn=[]}) {
 
 export function Title() {
     return (
-        <Container className="pt-2" style={{backgroundColor: "#2B2452" , color: "white"}}>
+        <Container className="d-flex justify-content-center pt-2" style={{backgroundColor: "#2B2452" , color: "white"}}>
             <Image src="images/WinterLogoLong_White_Large.png" height="50" width="auto" className="float-start" />
         </Container>
     )
@@ -259,12 +309,53 @@ export function Footer() {
         <Container fluid className="p-3" style={{backgroundColor: "#2B2452" , color: "white"}}>
             <Row>
                 <Col>
-                Social Media Links
+                    <div className="imageContainer">
+                        <img src="images/facebook.png" height="60px" width="60px" className="imageDefault"/>
+                        <a href="https://www.facebook.com/projwinter/">
+                            <img src="images/facebook-hover.png" height="60px" width="60px" className="imageHidden"/>
+                        </a>
+                    </div> 
                 </Col>
-            </Row>
-            <Row>
                 <Col>
-                Copyright Info
+                    <div className="imageContainer">
+                        <img src="images/twitter.png" height="60px" width="60px" className="imageDefault"/>
+                        <a href="https://twitter.com/projwinter">
+                            <img src="images/twitter-hover.png" height="60px" width="60px" className="imageHidden"/>
+                        </a>
+                    </div>
+                </Col>
+                <Col>
+                    <div className="imageContainer">
+                        <img src="images/instagram.png" height="60px" width="60px" className="imageDefault"/>
+                        <a href="https://www.instagram.com/projwinter/">
+                           <img src="images/instagram-hover.png" height="60px" width="60px" className="imageHidden"/> 
+                        </a>
+                    </div>
+                </Col>
+                <Col>
+                    <div className="imageContainer">
+                        <img src="images/reddit.png" height="60px" width="60px" className="imageDefault"/>
+                        <a href="https://www.reddit.com/r/Project_Winter/">
+                           <img src="images/reddit-hover.png" height="60px" width="60px" className="imageHidden"/> 
+                        </a>
+                        
+                    </div>
+                </Col>
+                <Col>
+                    <div className="imageContainer">
+                        <img src="images/discord.png" height="60px" width="60px" className="imageDefault"/>
+                        <a href="https://discord.com/invite/projectwinter">
+                            <img src="images/discord-hover.png" height="60px" width="60px" className="imageHidden"/>
+                        </a>
+                    </div>
+                </Col>
+                <Col>
+                    <div className="imageContainer">
+                        <img src="images/mail.png" height="60px" width="60px" className="imageDefault"/>
+                        <a href="https://otherocean.us15.list-manage.com/subscribe?u=5acaca8ecc5599f7e55e6d3ef&id=302de80b05">
+                            <img src="images/mail-hover.png" height="60px" width="60px" className="imageHidden"/>
+                        </a>
+                    </div>
                 </Col>
             </Row>
         </Container>
