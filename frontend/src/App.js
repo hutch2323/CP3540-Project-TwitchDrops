@@ -3,8 +3,8 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import { Container, Row, Image, CardGroup, Card } from 'react-bootstrap';
-import { BsFillClockFill } from "react-icons/bs"; 
-import { Current, Past, Future, FAQS, Accounts } from "./pages";
+import { BsFillClockFill, BsDiamondFill } from "react-icons/bs"; 
+import { Current, Past, Future, FAQS, Accounts, CountDownDisplay } from "./pages";
 import CardHeader from 'react-bootstrap/esm/CardHeader';
 
 function App() {
@@ -83,6 +83,23 @@ const calculateTimeLeft = (twitchDrops) => {
   }
   return timeLeft;
 }
+
+export function calculateToEventStart(startDate){
+  let year = new Date().getFullYear();
+  let difference = +new Date(startDate) - +new Date();
+  let timeLeft = {};
+  if (difference > 0) {
+    timeLeft = {
+      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((difference / 1000 / 60) % 60),
+      seconds: Math.floor((difference / 1000) % 60)
+    };
+  } else {
+    return null;
+  }
+  return timeLeft;
+}
     
 export function TwitchDrops(props) {
   return (
@@ -104,10 +121,14 @@ export function TwitchDrops(props) {
 }
 
 export function Events(props){
+  let timeLeft = calculateToEventStart(props.info.start_date);
+  
   return(
     <Container className="p-5 rounded-3">
-      <Row className="pb-3 g-4 justify-content-center">
-        {props.info.name}: {props.info.start_date} - {props.info.end_date}
+      <Row className="rounded-3 pt-3 pb-3 g-4 m-auto mb-3 justify-content-center" style={{backgroundColor:"rgba(0, 0, 0, 0.5)", color:"white", fontSize:"20px", fontFamily:"Timeless-Normal"}}>
+        <p className="m-auto" style={{fontSize:"35px", color:"#FFF76F"}}>{(props.info.name).toUpperCase()}</p>
+        <p className="m-auto"><BsDiamondFill color="#FFF76F"/> {props.info.start_date} - {props.info.end_date} <BsDiamondFill color="#FFF76F"/></p>
+        {timeLeft != null && <CountDownDisplay timeLeft={timeLeft}/>}    
       </Row>
       <Row xs={1} md={3} className="g-4 justify-content-center">
         { props.info.drops.map((twitchDrop, i) => { return <TwitchDrops key={i} info={twitchDrop} />}) }   
@@ -161,11 +182,14 @@ export function Events(props){
 
 export function FAQ(props){
   return(
-    <Container style={{ padding:"15px"}}>
-      <Row>
-          <h4 style={{color:"yellow"}}>{props.info.question}</h4>
-      </Row>
-      <Row>
+    <Container className="p-5" style={{background:"url(images/main-image-alpha-snow.png)", backgroundSize:"100% 100%", verticalAlign:"middle"}}>
+      <Row className="p-3">
+          
+          <h5 className="pb-2" style={{color:"#FFF76F"}}>{props.info.question}</h5>
+          <Container className="pb-3">
+            <BsDiamondFill color="#2B2452"/><BsDiamondFill color="#2B2452"/><BsDiamondFill color="#2B2452"/><BsDiamondFill color="#2B2452"/><BsDiamondFill color="#2B2452"/>
+          </Container>
+          
           <p style={{overflowWrap:"break-word", color:"white"}}>{props.info.answer}</p>
       </Row>
     </Container>
