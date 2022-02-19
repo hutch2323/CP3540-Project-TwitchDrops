@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { Container, Navbar, Nav, Row, Col, Image, CardGroup, Card, Collapse, Button, } from 'react-bootstrap';
+import { Container, Navbar, Nav, Row, Col, Image, Collapse, Button, } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import ReactDOM from 'react-dom';
-import Countdown from 'react-countdown';
-import { TwitchDrops, PastDrops, FutureDrops, FAQ, Events } from './App';
+import { FAQ, Events, } from './App';
 
 export function Current({twitchDrops=[], timeLeft=[]}) {
 
@@ -52,13 +50,18 @@ export function Past({pastDrops=[]}) {
                 </Row>
             </Container>
 
-            <Container>
-                <h2 className="pt-5">Past Drops</h2>
-                <h4>Was drop was available.</h4>
-                <h4>{startString} to {endString}</h4>
-            </Container>
-            <Container className="py-3">
-                { pastDrops.map((event, i) => { return <Events key={i} info={event} />}) }                        
+            <Container fluid className="ps-0 pe-0" style={{background:"url(images/wood-chopping.png)"}}>
+                <Container fluid className="pt-5">
+                    <Image src="images/twitchDrops.png" width="100%" style={{maxWidth:"800px"}}/>
+                </Container>
+                <Container fluid className="mt-5" style={{ padding:"20px", backgroundColor:"rgb(43, 36, 82, 0.75)"}}>
+                    
+                    <Image src="images/pastEvents.png" width="100%" style={{maxWidth:"800px"}}/>
+                    {/* <CountDownDisplay timeLeft={timeLeft} />   */}
+                </Container>    
+                <Container className="py-3">
+                    { pastDrops.map((event, i) => { return <Events key={i} info={event} />}) }                        
+                </Container>
             </Container>
             <Footer />
         </>
@@ -82,13 +85,18 @@ export function Future({futureDrops=[]}) {
                     <Navigation />
                 </Row>
             </Container>
-            <Container>
-                <h2 className="pt-5">Future Drops</h2>
-                <h4>Drop will be available on.</h4>
-                <h4>{startString} to {endString}</h4>
-            </Container>
-            <Container className="py-3">
-                { futureDrops.map((event, i) => { return <Events key={i} info={event} />}) }                        
+            <Container fluid className="ps-0 pe-0" style={{background:"url(images/hunting.png)"}}>
+                <Container fluid className="pt-5">
+                    <Image src="images/twitchDrops.png" width="100%" style={{maxWidth:"800px"}}/>
+                </Container>
+                <Container fluid className="mt-5" style={{ padding:"20px", backgroundColor:"rgb(43, 36, 82, 0.75)"}}>
+                    
+                    <Image src="images/futureEvents.png" width="100%" style={{maxWidth:"800px"}}/>
+                    {/* <CountDownDisplay timeLeft={timeLeft} />   */}
+                </Container>    
+                <Container className="py-3">
+                    { futureDrops.map((event, i) => { return <Events key={i} info={event} />}) }                        
+                </Container>
             </Container>
             <Footer />
         </>
@@ -114,9 +122,9 @@ export function FAQS({faqs=[]}) {
                 </Container>
                 <Container fluid className="mt-5" style={{ padding:"20px", backgroundColor:"rgb(0, 0, 0, 0.65)"}}>
                     <Image className="pt-3" src="images/faqs.png" width="100%" style={{maxWidth:"800px"}}/>
-                    <Container className="pt-3 rounded-3" >
+                </Container>
+                <Container className="pt-3 rounded-3" >
                         {faqs.map( (faq, i) => { return <FAQ key={i} info={faq} />})}
-                    </Container>
                 </Container>
             </Container>
             <Footer />
