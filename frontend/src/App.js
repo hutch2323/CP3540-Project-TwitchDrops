@@ -86,79 +86,87 @@ const calculateTimeLeft = (twitchDrops) => {
     
 export function TwitchDrops(props) {
   return (
-    <div>
-      <CardGroup style={{borderRadius:"0.5rem",boxShadow:"0.5rem 0.5rem 1rem #2B2452",fontFamily:"Timeless-Normal"}}>
-        <Card style={{backgroundColor:"rgba(255, 255, 255, 0.5)"}}>
-          <Card.Body style={{fontSize:"20px"}}>
-            <Card.Title className="p-2 text-light" style={{backgroundColor:"rgba(43, 36, 82, 0.75)"}}>{(props.info.item_name).toUpperCase()}</Card.Title>
+    <Container>
+      <CardGroup className="dropCard">
+        <Card className="dropCardBackground">
+          <Card.Body>
+            <Card.Title className="p-2 text-light dropCardHeader">{(props.info.item_name).toUpperCase()}</Card.Title>
             <Card.Img variant="top" src={props.info.item_icon} />
-            <Card.Text>
-            {/* Streamer: {props.info.streamer_name} */}
-            </Card.Text>
-            <Card.Text className="d-flex justify-content-center m-auto">
-              <BsFillClockFill className="m-auto ms-0 me-0" color="rgba(43, 36, 82, 0.75)" size="30px" style={{ paddingRight: "5px" }} />
+            <Card.Text className="d-flex justify-content-center m-auto pt-2">
+              <BsFillClockFill className="m-auto ms-0 me-0 pe-1" color="rgba(43, 36, 82, 0.75)" size="30px"/>
               <span className="m-auto ms-0 me-0">Watch Time: {props.info.unlock_condition}</span>
             </Card.Text>
           </Card.Body>
-          {/* <a href={props.info.streamer_account}><button type="button" className="btn btn-secondary">View {props.info.streamer_name}'s Page</button></a> */}
-        </Card>
+         </Card>
       </CardGroup>
-    </div>
+    </Container>
   )
 }
 
-export function PastDrops(props) {
-  return (
-      <div>
-          <CardGroup>
-            <Card>
-                <Card.Img variant="top" src={props.info.item_icon}  />
-                <Card.Body>
-                  <Card.Title>{props.info.item_name}</Card.Title>
-                  <Card.Text>
-                    Streamer: {props.info.streamer_name}
-                  </Card.Text>
-                  <Card.Text>
-                  <BsFillClockFill color="#2B2452" size="20px" style={{ paddingRight: "5px" }} />How Long to Watch: {props.info.unlock_condition}
-                  </Card.Text>
-                  <a href={props.info.streamer_account}><button type="button" className="btn btn-secondary">View {props.info.streamer_name}'s Page</button></a>
-                </Card.Body>
-            </Card>
-          </CardGroup>  
-      </div>
-  );
-}
+export function Events(props){
+  return(
+    <Container className="p-5 rounded-3">
+      <Row className="pb-3 g-4 justify-content-center">
+        {props.info.name}: {props.info.start_date} - {props.info.end_date}
+      </Row>
+      <Row xs={1} md={3} className="g-4 justify-content-center">
+        { props.info.drops.map((twitchDrop, i) => { return <TwitchDrops key={i} info={twitchDrop} />}) }   
+      </Row>
+    </Container>
+  )
+} 
+// export function PastDrops(props) {
+//   return (
+//       <div>
+//           <CardGroup>
+//             <Card>
+//                 <Card.Img variant="top" src={props.info.item_icon}  />
+//                 <Card.Body>
+//                   <Card.Title>{props.info.item_name}</Card.Title>
+//                   <Card.Text>
+//                     Streamer: {props.info.streamer_name}
+//                   </Card.Text>
+//                   <Card.Text>
+//                   <BsFillClockFill color="#2B2452" size="20px" style={{ paddingRight: "5px" }} />How Long to Watch: {props.info.unlock_condition}
+//                   </Card.Text>
+//                   <a href={props.info.streamer_account}><button type="button" className="btn btn-secondary">View {props.info.streamer_name}'s Page</button></a>
+//                 </Card.Body>
+//             </Card>
+//           </CardGroup>  
+//       </div>
+//   );
+// }
 
-export function FutureDrops(props) {
-  return (
-      <div>
-          <CardGroup>
-            <Card>
-                <Card.Img variant="top" src={props.info.item_icon}  />
-                <Card.Body>
-                  <Card.Title>{props.info.item_name}</Card.Title>
-                  <Card.Text>
-                    Streamer: {props.info.streamer_name}
-                  </Card.Text>
-                  <Card.Text>
-                    <BsFillClockFill color="#2B2452" size="20px" style={{ paddingRight: "5px" }} /> How Long to Watch: {props.info.unlock_condition}
-                  </Card.Text>
-                  <a href={props.info.streamer_account}><button type="button" className="btn btn-secondary">View {props.info.streamer_name}'s Page</button></a>
-                </Card.Body>
-            </Card>
-          </CardGroup>  
-      </div>
-  );
-}
+// export function FutureDrops(props) {
+//   return (
+//       <div>
+//           <CardGroup>
+//             <Card>
+//                 <Card.Img variant="top" src={props.info.item_icon}  />
+//                 <Card.Body>
+//                   <Card.Title>{props.info.item_name}</Card.Title>
+//                   <Card.Text>
+//                     Streamer: {props.info.streamer_name}
+//                   </Card.Text>
+//                   <Card.Text>
+//                     <BsFillClockFill color="#2B2452" size="20px" style={{ paddingRight: "5px" }} /> How Long to Watch: {props.info.unlock_condition}
+//                   </Card.Text>
+//                   <a href={props.info.streamer_account}><button type="button" className="btn btn-secondary">View {props.info.streamer_name}'s Page</button></a>
+//                 </Card.Body>
+//             </Card>
+//           </CardGroup>  
+//       </div>
+//   );
+// }
 
 export function FAQ(props){
   return(
     <Container style={{ padding:"15px"}}>
       <Row>
-          <h4>{props.info.question}</h4>
+          <h4 style={{color:"yellow"}}>{props.info.question}</h4>
       </Row>
       <Row>
-          <p style={{overflowWrap:"break-word"}}>{props.info.answer}</p>
+          <p style={{overflowWrap:"break-word", color:"white"}}>{props.info.answer}</p>
       </Row>
     </Container>
   )

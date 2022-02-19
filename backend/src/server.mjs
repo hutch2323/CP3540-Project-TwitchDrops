@@ -176,8 +176,9 @@ app.put('/api/updateTwitchDrop', async (req, res) => {
             const client = await MongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true})
             const db = client.db("TwitchDropsApp");
 
-            await db.collection("twitchDrops").updateOne({itemdefid: dropData.itemdefid}, {$set: {dropData}})
-            res.status(200).json({message:"Success", dropData: req.body});
+            await db.collection("twitchDrops").updateOne({name: dropData.name, drops: {$elemMatch:{itemdefid: dropData.drops[0].itemdefid}}}, {$set: {"drops.$": dropData.drops[0]}})
+            // const itemName = db.collection("twitchDrops").find({drops[0].itemdefid: dropData.itemdefid}).toArray();
+            res.status(200).json({message:"Success", dropData: dropData});
             client.close();
         }
         catch (error) {
@@ -196,7 +197,7 @@ app.put('/api/updateFAQ', async (req, res) => {
             const client = await MongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true})
             const db = client.db("TwitchDropsApp");
 
-            await db.collection("faqs").updateOne({question: faqData.id}, {$set: {faqData}})
+            await db.collection("faqs").updateOne({qId: faqData.qId}, {$set: faqData})
             res.status(200).json({message:"Success", faqData: req.body});
             client.close();
         }
@@ -215,11 +216,11 @@ app.post('/api/addAPIKey', async (req, res) => {
     if (req.headers.apikey == masterKey) {
     // if (await isValidMasterKey(req.headers.apikey)){
         try{
-            let newKey = req.body.apiKey
+            let apiKey = req.body.apiKey
             const client = await MongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true})
             const db = client.db("TwitchDropsApp");
 
-            await db.collection("apiKeys").insertOne({newKey});
+            await db.collection("apiKeys").insertOne({apiKey});
             res.status(200).json({message:"Success", dropData: req.body});
             client.close();
         }
