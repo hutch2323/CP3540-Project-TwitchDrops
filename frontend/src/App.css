@@ -40,29 +40,29 @@
 .imageContainer{
   display: inline-block;
   position: relative;
-  width: 60px;
+  width: 60px !important;
   height: 60px;
   margin: 0 25px 0 25px;
 }
 
 .imageHidden {
   position: absolute;
-    top: 0;
-    left: 0;
-    transition: opacity;
-    width: 60px;
-    height: 60px;
-    opacity: 0;
+  top: 0;
+  left: 0;
+  transition: opacity;
+  width: 60px;
+  height: 60px;
+  opacity: 0;
 }
 
 .imageDefault {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transition: opacity;
-    width: 60px;
-    height: 60px;
-    opacity: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity;
+  width: 60px;
+  height: 60px;
+  opacity: 1;
 }
 
 .imageHidden:hover{
@@ -73,6 +73,64 @@
 .imageDefault:hover {
   opacity: 0;
   display: none;
+}
+
+.countDownColumn{
+  max-Width:169px; 
+  min-Width:125px;
+}
+
+.countDownRowHeader{
+  font-size:24px;
+  font-family: "Timeless-Normal";
+  background-color:#000000;
+  max-width: 170px !important;
+}
+
+.countDownRowNumber{
+  background:url('../public/images/thumbnail-image-alpha-small.png');
+  background-Repeat:no-repeat ;
+  background-Position:center; 
+  line-height:165px;
+  font-Size:80px;
+  font-Family:"Timeless-Normal";
+  max-width: 170px !important;
+  background-Size:100% 100%
+}
+
+.streamButton{
+  background:url('../public/images/coachStock.png'); 
+  background-Size:100% 100% !important;
+  width:100%;
+  height:75px
+}
+
+.dropCard{
+  border-Radius:0.5rem;
+  box-Shadow:0.5rem 0.5rem 1rem #2B2452;
+  font-Family:"Timeless-Normal";
+  font-size:20px
+}
+
+.dropCardBackground{
+  background-color:rgba(255, 255, 255, 0.5) !important
+}
+
+.dropCardHeader{
+  background-Color:rgba(43, 36, 82, 0.75)
+}
+
+.navBarContainer{
+  background-Color:#2B2452;
+  color: white;
+  font-Family:"Timeless-Normal";
+  font-Size:20px
+}
+
+.navBarStyle{
+  background-Color:#2B2452;
+  color: white; 
+  font-Family:"Timeless-Normal";
 }
 
 @media only screen and (max-width: 575px) {
