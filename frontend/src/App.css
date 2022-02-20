@@ -133,6 +133,22 @@
   font-Family:"Timeless-Normal";
 }
 
+.carousel-control-next, .carousel-control-prev {
+  opacity: 1 !important;
+  top: auto !important;
+}
+
+.carousel-control-next-icon, .carousel-control-prev-icon {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+  border-radius: 10px;
+  box-Shadow:0.35rem 0.35rem 0.75rem #2B2452;
+  filter:none !important;
+}
+
+.carousel-indicators [data-bs-target]{
+  border-bottom: 0px !important;
+}
+
 @media only screen and (max-width: 575px) {
   .nav-item{
     margin:auto;

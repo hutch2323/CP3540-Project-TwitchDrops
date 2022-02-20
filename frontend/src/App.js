@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
-import { Container, Row, Image, CardGroup, Card } from 'react-bootstrap';
+import { Container, Row, Image, CardGroup, Card, Carousel } from 'react-bootstrap';
 import { BsFillClockFill, BsDiamondFill } from "react-icons/bs"; 
 import { Current, Past, Future, FAQS, Accounts, CountDownDisplay } from "./pages";
 import CardHeader from 'react-bootstrap/esm/CardHeader';
@@ -124,16 +124,16 @@ export function Events(props){
   let timeLeft = calculateToEventStart(props.info.start_date);
   
   return(
-    <Container className="p-5 rounded-3">
-      <Row className="rounded-3 pt-3 pb-3 g-4 m-auto mb-3 justify-content-center" style={{backgroundColor:"rgba(0, 0, 0, 0.5)", color:"white", fontSize:"20px", fontFamily:"Timeless-Normal"}}>
-        <p className="m-auto" style={{fontSize:"35px", color:"#FFF76F"}}>{(props.info.name).toUpperCase()}</p>
-        <p className="m-auto"><BsDiamondFill color="#FFF76F"/> {props.info.start_date} - {props.info.end_date} <BsDiamondFill color="#FFF76F"/></p>
-        {timeLeft != null && <CountDownDisplay timeLeft={timeLeft}/>}    
-      </Row>
-      <Row xs={1} md={3} className="g-4 justify-content-center">
-        { props.info.drops.map((twitchDrop, i) => { return <TwitchDrops key={i} info={twitchDrop} />}) }   
-      </Row>
-    </Container>
+      <Container className="p-5 mb-2 rounded-3">
+        <Row className="rounded-3 pt-3 pb-3 g-4 m-auto mb-3 justify-content-center" style={{backgroundColor:"rgba(0, 0, 0, 0.5)", color:"white", fontSize:"20px", fontFamily:"Timeless-Normal"}}>
+          <p className="m-auto" style={{fontSize:"35px", color:"#FFF76F"}}>{(props.info.name).toUpperCase()}</p>
+          <p className="m-auto"><BsDiamondFill color="#FFF76F"/> {props.info.start_date} - {props.info.end_date} <BsDiamondFill color="#FFF76F"/></p>
+          {timeLeft != null && <CountDownDisplay timeLeft={timeLeft}/>}    
+        </Row>
+        <Row xs={1} md={3} className="g-4 justify-content-center">
+          { props.info.drops.map((twitchDrop, i) => { return <TwitchDrops key={i} info={twitchDrop} />}) }   
+        </Row>
+      </Container>
   )
 } 
 // export function PastDrops(props) {
