@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Container, Navbar, Nav, Row, Col, Image, Collapse, Button, } from 'react-bootstrap';
+import { Container, Navbar, Nav, Row, Col, Image, Collapse, Button, Carousel } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { FAQ, Events, } from './App';
+import { BsDiamondFill } from 'react-icons/bs';
 
 export function Current({twitchDrops=[], timeLeft=[]}) {
 
@@ -25,11 +26,18 @@ export function Current({twitchDrops=[], timeLeft=[]}) {
                     <Image src="images/currentEvent.png" width="100%" style={{maxWidth:"800px"}}/>
                     <CountDownDisplay timeLeft={timeLeft} />  
                 </Container>    
-                <Container className="py-3">
+                <Container className="py-3 pb-5">
                     <Container className="" style={{maxWidth:"320px"}}>
                         <Button href="https://www.twitch.tv/coachstock" variant="outline-*" className="mt-4 streamButton"></Button>
                     </Container>
-                    { twitchDrops.map((event, i) => { return <Events key={i} info={event} />}) }                        
+                    <Carousel variant="dark">
+                        { twitchDrops.map((event, i) => { return ( 
+                            <Carousel.Item key={i}>
+                                <Events key={i} info={event} />
+                            </Carousel.Item>
+                        )}) }   
+                    </Carousel>
+                                         
                 </Container>
             </Container>
             <Footer />
@@ -61,8 +69,14 @@ export function Past({pastDrops=[]}) {
                     <Image src="images/pastEvents.png" width="100%" style={{maxWidth:"800px"}}/>
                     {/* <CountDownDisplay timeLeft={timeLeft} />   */}
                 </Container>    
-                <Container className="py-3">
-                    { pastDrops.map((event, i) => { return <Events key={i} info={event} />}) }                        
+                <Container className="py-3 pb-5">
+                    <Carousel variant="dark">
+                        { pastDrops.map((event, i) => { return ( 
+                            <Carousel.Item key={i}>
+                                <Events key={i} info={event} />
+                            </Carousel.Item>
+                        )}) }   
+                    </Carousel>
                 </Container>
             </Container>
             <Footer />
@@ -97,8 +111,15 @@ export function Future({futureDrops=[]}) {
                     <Image src="images/futureEvents.png" width="100%" style={{maxWidth:"800px"}}/>
                     {/* <CountDownDisplay timeLeft={timeLeft} />   */}
                 </Container>    
-                <Container className="py-3">
-                    { futureDrops.map((event, i) => { return <Events key={i} info={event} />}) }                        
+                <Container className="py-3 pb-5">
+                    <Carousel variant="dark">
+                        { futureDrops.map((event, i) => { return ( 
+                            <Carousel.Item key={i}>
+                                <Events key={i} info={event} />
+                            </Carousel.Item>
+                        )}) }   
+                    </Carousel>
+                                       
                 </Container>
             </Container>
             <Footer />
@@ -152,57 +173,100 @@ export function Accounts({signedIn=[]}) {
                     <Navigation />
                 </Row>
             </Container>
-            <Container className="py-3">
-                <Container className="p-5 bg-light rounded-3">
-                    <Row>
-                        <Collapse in={step1}>
+            <Container fluid className="ps-0 pe-0 pb-5" style={{background:"url(images/background_store.jpg)", backgroundPosition: "center", 
+            backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", backgroundSize: "cover"}}>
+                <Container fluid className="pt-5">
+                    <Image src="images/twitchDrops.png" width="100%" style={{maxWidth:"800px"}}/>
+                </Container>
+                <Container fluid className="mt-5" style={{ padding:"20px", backgroundColor:"rgb(43, 36, 82, 0.75)"}}>
+                    <Image src="images/linkAccounts.png" width="100%" style={{maxWidth:"800px"}}/>
+                </Container>  
+                <Container className="mt-5 p-5 rounded-3" style={{backgroundColor:"rgb(0, 0, 0, 0.75)", color:"white"}}>
+                    <Row className="">
+                        <Container>
                             <div id="sign-in">
-                                <h4><b>Step 1</b>: sign in to your Twitch account</h4>
+                                <h4 className="pb-2"><b style={{color:""}}>Step 1</b>: Sign in to your Steam account</h4>
                                 <Button
-                                    onClick={() => {setStep1(!step1); setStep2(!step2)}}
+                                    style={{backgroundColor:"#1B2C43", borderRadius:"6px", height:"55px", maxWidth:"250px", width:"100%", fontFamily:"Timeless-Normal", alignItems:"center"}}
+                                    onClick={() => {setStep2(!step2)}}
                                     aria-controls="sign-in"
                                     aria-expanded={step1}
+                                    variant="outline-*"
                                 >
-                                    Sign-in
+                                    <Container className="d-flex justify-content-center p-0 m-0" style={{alignItems:"center", alignItems:"center", color:"white"}}>
+                                        <Image className="me-2" src="images/steamLogo.png" height="25px" width="25px"/>
+                                        <span>SIGN IN WITH STEAM</span>
+                                    </Container>
+                                    
                                 </Button>
                             </div>
-                        </Collapse>
+                        </Container>
                     </Row>
-                    <Row>
-                        <Collapse in={step2}>
+                    <Container className="p-5 d-flex justify-content-center">
+                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
+                    </Container>
+                    <Row className="">
+                        <Container>
                             <div id="link">
-                                <h4><b>Step 2</b>: Link your account</h4>
+                                <h4 className="pb-2"><b>Step 2</b>: Sign into your Twitch account</h4>
                                 <Button
-                                onClick={() => {setStep2(!step2); setStep3(!step3)}}
-                                aria-controls="link"
-                                aria-expanded={step2}
+                                    style={{backgroundColor:"#822DFF", borderRadius:"6px", height:"55px", maxWidth:"250px", width:"100%", fontFamily:"Timeless-Normal", alignItems:"center"}}
+                                    onClick={() => {setStep3(!step3)}}
+                                    aria-controls="link"
+                                    aria-expanded={step2}
+                                    variant="outline-*"
+                                    disabled={!step2}
                                 >
-                                    Link
+                                    <Container className="d-flex justify-content-center p-0 m-0" style={{alignItems:"center", alignItems:"center", color:"white"}}>
+                                        <Image className="me-2" src="images/twitchLogo.png" height="25px" width="25px"/>
+                                        <span>SIGN IN WITH TWITCH</span>
+                                    </Container>
+                                    
                                 </Button>
                             </div>
-                        </Collapse>
+                        </Container>
                     </Row>
-                    <Row>
-                        <Collapse in={step3}>
+                    <Container className="p-5 d-flex justify-content-center">
+                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
+                    </Container>
+                    <Row className="">
+                        <Container>
                             <div in="activate">
-                                <h4><b>Step 3</b>: Activate Twitch Drops for Project Winter</h4>
+                                <h4 className="pb-2"><b>Step 3</b>: Activate Twitch Drops</h4>
                                 <Button
-                                onClick={() => {setStep3(!step3); setFinal(!final)}}
+                                style={{borderRadius:"6px", height:"55px", maxWidth:"250px", width:"100%", fontFamily:"Timeless-Normal"}}
+                                onClick={() => {setFinal(!final)}}
                                 aria-controls="activate"
                                 aria-expanded={step3}
+                                disabled={!step3}
                                 >
-                                    Activate
+                                    ACTIVATE DROPS
                                 </Button>
                                 </div>
-                        </Collapse>
+                        </Container>
                     </Row>
-                    <Row>
-                        <Collapse in={final}>
+                    {/* <Container className="p-5 d-flex justify-content-center">
+                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
+                    </Container> */}
+                    {/* <Row className="">
+                        <Container>
                             <div in="final">
                                 <h4>Congratulations, Project Winter Twitch Drops have been activated on your account!</h4>
                             </div>
-                        </Collapse>
-                    </Row>
+                        </Container>
+                    </Row> */}
                 </Container>
             </Container>
             <Footer />

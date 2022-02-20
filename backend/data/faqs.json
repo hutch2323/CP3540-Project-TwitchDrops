@@ -1,19 +1,53 @@
-[
-    { 
+[ 
+    {
       "qId" : "1",
-      "question": "Where can I see my Twitch drops?",
-      "answer": "You can view your Twitch Drops on the Inventory page. https://www.twitch.tv/drops/inventory"
-      
+      "question" : "How can you receive the items in the Twitch Drops?",
+      "answer" : "To receive the items, you will need to create a Twitch account and view the Twitch Streams for a set amount of time."  
     },
-    { 
+    {
       "qId" : "2",
-      "question": "I no longer have access to the Twitch account I linked my Steam account to and want to link a new one. What do I do?",
-      "answer": "You can unlink your old Twitch account by signing in with Steam on this page and then clicking the Unlink Account button. Then you will be able to link your accounts normally again."
-      
+      "question" : "Do I need a Twitch Prime account to redeem the drops?",
+      "answer" : "No you do not need to have a Twitch Prime account."
     },
     { 
       "qId" : "3",
-      "question": "Where can I download Project Winter?",
-      "answer": "https://store.steampowered.com/app/774861/Project_Winter/"
-    } 
+      "question" : "After I've viewed the stream, how do I receive the drop in my game?",
+      "answer" : "Once you have viewed the stream for the correct amount of time. Go to https://www.twitch.tv/drops/inventory/ and click on redeem to receive the item."
+    },
+    { 
+      "qId" : "4",
+      "question" : "Where can I see my Twitch drops?",
+      "answer" : "You can view your Twitch Drops on the Inventory page. https://www.twitch.tv/drops/inventory"
+      
+    },
+    { 
+      "qId" : "5",
+      "question" : "How do I unlink my Steam account from my old Twitch account and link it to a new Twitch account?",
+      "answer" : "You can sign in to Steam on this page and click the “Unlink Account button”. This will unlink your Steam account from your old Twitch account. You can then link your accounts like normal."
+      
+    },{
+      "qId" : "6",
+      "question" : "How long do I have to watch the Twitch Streams to receive the drops?",
+      "answer" : "The amount of time to watch can vary on the drop. The Watch Time is displayed under the drop image."
+    },
+    { 
+      "qId" : "7",
+      "question" : "Which systems is  Project Winter available on?",
+      "answer" : "Project Winter is available to download on Steam, XBox, PlayStations, And Nintendo Switch."
+      
+    },{
+      "qId" : "8",
+      "question" : "Which systems are the Twitch drops available for?",
+      "answer" : "Right now, the drops are only available for PC."
+    },
+    {
+      "qId" : "9",
+      "question" : "Where can I download Project Winter for PC?",
+      "answer" : "Project Winter can be downloaded on Steam here https://store.steampowered.com/app/774861/Project_Winter/"
+    },
+    {
+      "qId" : "10",
+      "question" : "Can I view more than one drop at a time?",
+      "answer" : "You can view more than one Twitch stream at a time. However, you can only redeem one drop at a time."
+    }
 ]

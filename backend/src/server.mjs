@@ -176,8 +176,9 @@ app.put('/api/updateTwitchDrop', async (req, res) => {
             const client = await MongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true})
             const db = client.db("TwitchDropsApp");
 
-            await db.collection("twitchDrops").updateOne({name: dropData.name, drops: {$elemMatch:{itemdefid: dropData.drops[0].itemdefid}}}, {$set: {"drops.$": dropData.drops[0]}})
-            // const itemName = db.collection("twitchDrops").find({drops[0].itemdefid: dropData.itemdefid}).toArray();
+            await db.collection("twitchDrops").updateOne(
+                {name: dropData.name, drops: {$elemMatch:{itemdefid: dropData.drops[0].itemdefid}}}, 
+                {$set: {"drops.$": dropData.drops[0]}})
             res.status(200).json({message:"Success", dropData: dropData});
             client.close();
         }
@@ -212,9 +213,10 @@ app.put('/api/updateFAQ', async (req, res) => {
 // Route used to add APIKeys. Masterkey made avaialable so other people working on project can initialize their databases.
 // Should be hidden, but revealed for the purpose of development. Once masterkey is added to db, can comment out first two lines
 app.post('/api/addAPIKey', async (req, res) => {
-    const masterKey = "ef72570ff371408f9668e414353b7b2e";
-    if (req.headers.apikey == masterKey) {
-    // if (await isValidMasterKey(req.headers.apikey)){
+    // unquote these first two lines and quote out the 3rd if no masterkey exists in the database
+    // const masterKey = "ef72570ff371408f9668e414353b7b2e";
+    // if (req.headers.apikey == masterKey) {
+    if (await isValidMasterKey(req.headers.apikey)){
         try{
             let apiKey = req.body.apiKey
             const client = await MongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true})
