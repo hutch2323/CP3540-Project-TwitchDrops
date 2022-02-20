@@ -15,7 +15,8 @@ export function Current({twitchDrops=[], timeLeft=[]}) {
                     <Navigation />
                 </Row>
             </Container>
-            <Container fluid className="ps-0 pe-0" style={{background:"url(images/websitebg.png)"}}>
+            <Container fluid className="ps-0 pe-0" style={{background:"url(images/websitebg.png)", backgroundPosition: "center", 
+            backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", backgroundSize: "cover"}}>
                 <Container fluid className="pt-5">
                     <Image src="images/twitchDrops.png" width="100%" style={{maxWidth:"800px"}}/>
                 </Container>
@@ -50,7 +51,8 @@ export function Past({pastDrops=[]}) {
                 </Row>
             </Container>
 
-            <Container fluid className="ps-0 pe-0" style={{background:"url(images/wood-chopping.png)"}}>
+            <Container fluid className="ps-0 pe-0" style={{background:"url(images/wood-chopping.png)", backgroundPosition: "center", 
+            backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", backgroundSize: "cover"}}>
                 <Container fluid className="pt-5">
                     <Image src="images/twitchDrops.png" width="100%" style={{maxWidth:"800px"}}/>
                 </Container>
@@ -85,7 +87,8 @@ export function Future({futureDrops=[]}) {
                     <Navigation />
                 </Row>
             </Container>
-            <Container fluid className="ps-0 pe-0" style={{background:"url(images/hunting.png)"}}>
+            <Container fluid className="ps-0 pe-0" style={{background:"url(images/hunting.png)", backgroundPosition: "center", 
+            backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", backgroundSize: "cover"}}>
                 <Container fluid className="pt-5">
                     <Image src="images/twitchDrops.png" width="100%" style={{maxWidth:"800px"}}/>
                 </Container>
@@ -116,7 +119,8 @@ export function FAQS({faqs=[]}) {
                     <Navigation />
                 </Row>
             </Container>
-            <Container fluid className="p-0 pb-5" style={{background:"url(images/camp-fire.png"}}>
+            <Container fluid className="p-0 pb-5" style={{background:"url(images/camp-fire.png)", backgroundPosition: "center", 
+            backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", backgroundSize: "cover"}}>
             <Container fluid className="pt-5">
                     <Image src="images/twitchDrops.png" width="100%" style={{maxWidth:"800px"}}/>
                 </Container>
