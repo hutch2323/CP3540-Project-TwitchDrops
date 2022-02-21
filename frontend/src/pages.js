@@ -289,7 +289,7 @@ export function Navigation() {
                 <Container className="w-100 d-flex justify-content-center">
                     <Navbar.Toggle aria-controls='response-navbar-nav' />
                     <Navbar.Collapse id='response-navbar-nav'>
-                        <Nav className="container-fluid w-100 d-flex justify-content-center ps-0 pe-0">
+                        <Nav className="container-fluid w-100 d-flex justify-content-center ps-0 pe-0" style={{alignItems:"center"}}>
                             <Nav.Item>
                                 <LinkContainer to="/">
                                     <Nav.Link className="ms-1 me-1">CURRENT DROPS</Nav.Link>
