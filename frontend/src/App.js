@@ -69,36 +69,57 @@ function App() {
 
 const calculateTimeLeft = (twitchDrops) => {
   // console.log(twitchDrops[0].end_date)
- 
-  let year = new Date().getFullYear();
-  let difference = +new Date(twitchDrops[0].end_date) - +new Date();
+  //console.log(twitchDrops)
   let timeLeft = {};
-  if (difference > 0) {
-    timeLeft = {
-      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-      minutes: Math.floor((difference / 1000 / 60) % 60),
-      seconds: Math.floor((difference / 1000) % 60)
-    };
+  if(twitchDrops.length == 0){
+    timeLeft = {days: "00",
+      hours: "00",
+      minutes: "00",
+      seconds: "00"}
+  }else{
+      let difference = +new Date(twitchDrops[0].end_date) - +new Date();
+      if (difference > 0) {
+        timeLeft = {
+          days: addZero(Math.floor(difference / (1000 * 60 * 60 * 24))),
+          hours: addZero(Math.floor((difference / (1000 * 60 * 60)) % 24)),
+          minutes: addZero(Math.floor((difference / 1000 / 60) % 60)),
+          seconds: addZero(Math.floor((difference / 1000) % 60))
+        };
+      }else {
+    return null;
+      }
   }
-  return timeLeft;
+    return timeLeft;
 }
 
 export function calculateToEventStart(startDate){
-  let year = new Date().getFullYear();
+let timeLeft = {};
+if(startDate.length == 0){
+  timeLeft = {days: "00",
+      hours: "00",
+      minutes: "00",
+      seconds: "00"}
+}else{
   let difference = +new Date(startDate) - +new Date();
-  let timeLeft = {};
   if (difference > 0) {
     timeLeft = {
-      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-      minutes: Math.floor((difference / 1000 / 60) % 60),
-      seconds: Math.floor((difference / 1000) % 60)
+      days: addZero(Math.floor(difference / (1000 * 60 * 60 * 24))),
+      hours: addZero(Math.floor((difference / (1000 * 60 * 60)) % 24)),
+      minutes: addZero(Math.floor((difference / 1000 / 60) % 60)),
+      seconds: addZero(Math.floor((difference / 1000) % 60))
     };
   } else {
     return null;
   }
+}
   return timeLeft;
+}
+
+function addZero(time){
+  if(time < 10){
+    time = "0" + time
+  }
+  return time
 }
     
 export function TwitchDrops(props) {

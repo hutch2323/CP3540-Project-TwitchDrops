@@ -5,7 +5,14 @@ import { FAQ, Events, } from './App';
 import { BsDiamondFill } from 'react-icons/bs';
 
 export function Current({twitchDrops=[], timeLeft=[]}) {
-
+    //twitchDrops=[]
+    //console.log(twitchDrops)
+    let noDrops = "none"
+    let timerDisplay = "true"
+    if (twitchDrops.length == 0){
+        noDrops = "true"
+        timerDisplay = "none"
+    }
     return (
         <>
             <Container fluid>
@@ -22,15 +29,20 @@ export function Current({twitchDrops=[], timeLeft=[]}) {
                     <Image src="images/twitchDrops.png" width="100%" style={{maxWidth:"800px"}}/>
                 </Container>
                 <Container fluid className="mt-5" style={{ padding:"20px", backgroundColor:"rgb(43, 36, 82, 0.5)"}}>
-                    
                     <Image src="images/currentEvent.png" width="100%" style={{maxWidth:"800px"}}/>
-                    <CountDownDisplay timeLeft={timeLeft} />  
-                </Container>    
+                    <Container  style={{  display: timerDisplay }}>
+                        <CountDownDisplay timeLeft={timeLeft} /> 
+                    </Container>
+                     
+                </Container>   
+                <Container style={{  display: noDrops, padding:"25px", background:"url(images/main-image-alpha-snow.png)", backgroundSize:"100% 100%", verticalAlign:"middle"}}>
+                    <h2 class="text-danger">There currently isn't any active drops. Check Future Drops page for the next drop date.</h2>
+                </Container> 
                 <Container className="py-3 pb-5">
-                    <Container className="" style={{maxWidth:"320px"}}>
+                    <Container className="" style={{maxWidth:"320px", display: timerDisplay}}>
                         <Button href="https://www.twitch.tv/coachstock" variant="outline-*" className="mt-4 streamButton"></Button>
                     </Container>
-                    <Carousel variant="dark">
+                    <Carousel variant="dark"  style={{  display: timerDisplay }}>
                         { twitchDrops.map((event, i) => { return ( 
                             <Carousel.Item key={i}>
                                 <Events key={i} info={event} />
@@ -39,6 +51,7 @@ export function Current({twitchDrops=[], timeLeft=[]}) {
                     </Carousel>
                                          
                 </Container>
+                
             </Container>
             <Footer />
         </>
@@ -46,8 +59,6 @@ export function Current({twitchDrops=[], timeLeft=[]}) {
 }
 
 export function Past({pastDrops=[]}) {
-    let startString = StartStringDate(pastDrops)
-    let endString = EndStringDate(pastDrops)
     return (
         <>
             <Container fluid>
@@ -88,8 +99,13 @@ export function Future({futureDrops=[]}) {
     //console.log("Current:")
     //console.log(futureDrops)
     //console.log(date.toLocaleDateString("en-US", options))
-    let startString = StartStringDate(futureDrops);
-    let endString = EndStringDate(futureDrops);
+    const testing = 0
+    let noDrops = "none"
+    let timerDisplay = "true"
+    if (futureDrops.length == 0){
+        noDrops = "true"
+        timerDisplay = "none"
+    }
 
     return (
         <>
@@ -110,8 +126,11 @@ export function Future({futureDrops=[]}) {
                     
                     <Image src="images/futureEvents.png" width="100%" style={{maxWidth:"800px"}}/>
                     {/* <CountDownDisplay timeLeft={timeLeft} />   */}
-                </Container>    
-                <Container className="py-3 pb-5">
+                </Container> 
+                <Container style={{  display: noDrops, padding:"25px", background:"url(images/main-image-alpha-snow.png)", backgroundSize:"100% 100%", verticalAlign:"middle"}}>
+                    <h2 class="text-danger">"There currently isn't Future Drops. Check back again for future times."</h2>
+                </Container>   
+                <Container className="py-3 pb-5" style={{  display: timerDisplay }}>
                     <Carousel variant="dark">
                         { futureDrops.map((event, i) => { return ( 
                             <Carousel.Item key={i}>
