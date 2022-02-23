@@ -1,18 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Navbar, Nav, Row, Col, Image, Collapse, Button, Carousel } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { FAQ, Events, } from './App';
 import { BsDiamondFill } from 'react-icons/bs';
 
 export function Current({twitchDrops=[], timeLeft=[]}) {
-    //twitchDrops=[]
-    //console.log(twitchDrops)
-    let noDrops = "none"
-    let timerDisplay = "true"
-    if (twitchDrops.length == 0){
-        noDrops = "true"
-        timerDisplay = "none"
-    }
     return (
         <>
             <Container fluid>
@@ -28,27 +20,36 @@ export function Current({twitchDrops=[], timeLeft=[]}) {
                 <Container fluid className="pt-5">
                     <Image src="images/twitchDrops.png" width="100%" style={{maxWidth:"800px"}}/>
                 </Container>
-                <Container fluid className="mt-5" style={{ padding:"20px", backgroundColor:"rgb(43, 36, 82, 0.5)"}}>
-                    <Image src="images/currentEvent.png" width="100%" style={{maxWidth:"800px"}}/>
-                    <Container  style={{  display: timerDisplay }}>
-                        <CountDownDisplay timeLeft={timeLeft} /> 
-                    </Container>
-                     
-                </Container>   
-                <Container style={{  display: noDrops, padding:"25px", background:"url(images/main-image-alpha-snow.png)", backgroundSize:"100% 100%", verticalAlign:"middle"}}>
-                    <h2 class="text-danger">There currently isn't any active drops. Check Future Drops page for the next drop date.</h2>
-                </Container> 
+                <Container fluid className="mt-5" style={{ padding:"20px", backgroundColor:"rgb(43, 36, 82, 0.75)"}}>
+                    <Image src="images/currentEvent.png" width="100%" style={{maxWidth:"800px"}}/>   
+                </Container>    
                 <Container className="py-3 pb-5">
-                    <Container className="" style={{maxWidth:"320px", display: timerDisplay}}>
-                        <Button href="https://www.twitch.tv/coachstock" variant="outline-*" className="mt-4 streamButton"></Button>
-                    </Container>
-                    <Carousel variant="dark"  style={{  display: timerDisplay }}>
-                        { twitchDrops.map((event, i) => { return ( 
-                            <Carousel.Item key={i}>
-                                <Events key={i} info={event} />
-                            </Carousel.Item>
-                        )}) }   
-                    </Carousel>
+                    {twitchDrops.length > 0 ? 
+                        <>
+                            {twitchDrops.length > 1 ? 
+                            <Carousel variant="dark">
+                                { twitchDrops.map((event, i) => { return ( 
+                                    <Carousel.Item key={i}>
+                                        <Events key={i} info={event} />
+                                    </Carousel.Item>
+                                )}) }   
+                            </Carousel>
+                            :
+                            <>
+                                { twitchDrops.map((event, i) => { return ( 
+                                        <Events key={i} info={event} />
+                                )}) }   
+                            </>
+                        }
+                        </>
+                    :
+                        <Container className="p-5 mb-2 rounded-3">
+                            <Row className="rounded-3 pt-3 pb-3 g-4 m-auto mb-3 justify-content-center" style={{backgroundColor:"rgba(0, 0, 0, 0.5)", color:"white", fontSize:"20px", fontFamily:"Timeless-Normal"}}>
+                            <p className="m-auto" style={{fontSize:"35px", color:"#FFF76F"}}>No Drops Available</p>
+                            <p className="m-auto"><BsDiamondFill color="#FFF76F"/> Check Future Drops for upcoming events! <BsDiamondFill color="#FFF76F"/></p>
+                        </Row> 
+                        </Container>
+                    }      
                                          
                 </Container>
                 
@@ -77,17 +78,35 @@ export function Past({pastDrops=[]}) {
                 </Container>
                 <Container fluid className="mt-5" style={{ padding:"20px", backgroundColor:"rgb(43, 36, 82, 0.75)"}}>
                     
-                    <Image src="images/pastEvents.png" width="100%" style={{maxWidth:"800px"}}/>
-                    {/* <CountDownDisplay timeLeft={timeLeft} />   */}
+                    <Image src="images/pastEvents.png" width="100%" style={{maxWidth:"675px"}}/>
                 </Container>    
                 <Container className="py-3 pb-5">
-                    <Carousel variant="dark">
-                        { pastDrops.map((event, i) => { return ( 
-                            <Carousel.Item key={i}>
-                                <Events key={i} info={event} />
-                            </Carousel.Item>
-                        )}) }   
-                    </Carousel>
+                    {pastDrops.length > 0 ? 
+                        <>
+                            {pastDrops.length > 1 ? 
+                            <Carousel variant="dark">
+                                { pastDrops.map((event, i) => { return ( 
+                                    <Carousel.Item key={i}>
+                                        <Events key={i} info={event} />
+                                    </Carousel.Item>
+                                )}) }   
+                            </Carousel>
+                            :
+                            <>
+                                { pastDrops.map((event, i) => { return ( 
+                                        <Events key={i} info={event} />
+                                )}) }   
+                            </>
+                        }
+                        </>
+                    :
+                        <Container className="p-5 mb-2 rounded-3">
+                            <Row className="rounded-3 pt-3 pb-3 g-4 m-auto mb-3 justify-content-center" style={{backgroundColor:"rgba(0, 0, 0, 0.5)", color:"white", fontSize:"20px", fontFamily:"Timeless-Normal"}}>
+                            <p className="m-auto" style={{fontSize:"35px", color:"#FFF76F"}}>No Drops Available</p>
+                            <p className="m-auto"><BsDiamondFill color="#FFF76F"/> Check again soon for event history! <BsDiamondFill color="#FFF76F"/></p>
+                        </Row> 
+                        </Container>
+                    }                 
                 </Container>
             </Container>
             <Footer />
@@ -96,9 +115,6 @@ export function Past({pastDrops=[]}) {
 }
 
 export function Future({futureDrops=[]}) {
-    //console.log("Current:")
-    //console.log(futureDrops)
-    //console.log(date.toLocaleDateString("en-US", options))
     const testing = 0
     let noDrops = "none"
     let timerDisplay = "true"
@@ -122,23 +138,36 @@ export function Future({futureDrops=[]}) {
                 <Container fluid className="pt-5">
                     <Image src="images/twitchDrops.png" width="100%" style={{maxWidth:"800px"}}/>
                 </Container>
-                <Container fluid className="mt-5" style={{ padding:"20px", backgroundColor:"rgb(43, 36, 82, 0.75)"}}>
-                    
+                <Container fluid className="mt-5" style={{ padding:"20px", backgroundColor:"rgb(43, 36, 82, 0.75)"}}> 
                     <Image src="images/futureEvents.png" width="100%" style={{maxWidth:"800px"}}/>
-                    {/* <CountDownDisplay timeLeft={timeLeft} />   */}
-                </Container> 
-                <Container style={{  display: noDrops, padding:"25px", background:"url(images/main-image-alpha-snow.png)", backgroundSize:"100% 100%", verticalAlign:"middle"}}>
-                    <h2 class="text-danger">"There currently isn't Future Drops. Check back again for future times."</h2>
                 </Container>   
-                <Container className="py-3 pb-5" style={{  display: timerDisplay }}>
-                    <Carousel variant="dark">
-                        { futureDrops.map((event, i) => { return ( 
-                            <Carousel.Item key={i}>
-                                <Events key={i} info={event} />
-                            </Carousel.Item>
-                        )}) }   
-                    </Carousel>
-                                       
+                <Container className="py-3 pb-5">
+                    {futureDrops.length > 0 ? 
+                        <>
+                            {futureDrops.length > 1 ? 
+                            <Carousel variant="dark">
+                                { futureDrops.map((event, i) => { return ( 
+                                    <Carousel.Item key={i}>
+                                        <Events key={i} info={event} />
+                                    </Carousel.Item>
+                                )}) }   
+                            </Carousel>
+                            :
+                            <>
+                                { futureDrops.map((event, i) => { return ( 
+                                        <Events key={i} info={event} />
+                                )}) }   
+                            </>
+                        }
+                        </>
+                    :
+                        <Container className="p-5 mb-2 rounded-3">
+                            <Row className="rounded-3 pt-3 pb-3 g-4 m-auto mb-3 justify-content-center" style={{backgroundColor:"rgba(0, 0, 0, 0.5)", color:"white", fontSize:"20px", fontFamily:"Timeless-Normal"}}>
+                            <p className="m-auto" style={{fontSize:"35px", color:"#FFF76F"}}>No Drops Available</p>
+                            <p className="m-auto"><BsDiamondFill color="#FFF76F"/> Check again soon for upcoming events! <BsDiamondFill color="#FFF76F"/></p>
+                        </Row> 
+                        </Container>
+                    }                 
                 </Container>
             </Container>
             <Footer />
@@ -176,11 +205,19 @@ export function FAQS({faqs=[]}) {
     )
 }
 
-export function Accounts({signedIn=[]}) {
+export function Accounts({isLinked=false, twitchUser=null, steamUser=null, setIsLinked, setTwitchUser, setSteamUser}) {
     const [step1, setStep1] = useState(true);
     const [step2, setStep2] = useState(false);
     const [step3, setStep3] = useState(false);
     const [final, setFinal] = useState(false);
+
+    useEffect(() => {
+        if (isLinked){
+        setStep1(true);
+        setStep2(true);
+        setStep3(true);
+        }
+    })
 
     return (
         <>
@@ -195,97 +232,196 @@ export function Accounts({signedIn=[]}) {
             <Container fluid className="ps-0 pe-0 pb-5" style={{background:"url(images/background_store.jpg)", backgroundPosition: "center", 
             backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", backgroundSize: "cover"}}>
                 <Container fluid className="pt-5">
-                    <Image src="images/twitchDrops.png" width="100%" style={{maxWidth:"800px"}}/>
+                    {!isLinked ? 
+                        <Image src="images/twitchDrops.png" width="100%" style={{maxWidth:"800px"}}/>
+                    :
+                        <Image src="images/twitchDropsActivated.png" width="100%" style={{maxWidth:"800px"}}/>
+                    }
                 </Container>
                 <Container fluid className="mt-5" style={{ padding:"20px", backgroundColor:"rgb(43, 36, 82, 0.75)"}}>
                     <Image src="images/linkAccounts.png" width="100%" style={{maxWidth:"800px"}}/>
                 </Container>  
                 <Container className="mt-5 p-5 rounded-3" style={{backgroundColor:"rgb(0, 0, 0, 0.75)", color:"white"}}>
-                    <Row className="">
+                    <Row className={!isLinked && steamUser==null ? "activeLink p-3" : "inactiveLink p-3"} id="steam">
                         <Container>
                             <div id="sign-in">
                                 <h4 className="pb-2"><b style={{color:""}}>Step 1</b>: Sign in to your Steam account</h4>
                                 <Button
                                     style={{backgroundColor:"#1B2C43", borderRadius:"6px", height:"55px", maxWidth:"250px", width:"100%", fontFamily:"Timeless-Normal", alignItems:"center"}}
-                                    onClick={() => {setStep2(!step2)}}
+                                    onClick={() => {
+                                        if(document.getElementById("steamButton").innerHTML == "SIGN OUT"){
+                                            setSteamUser(null);                                            
+                                            setStep2(false);                                            
+                                            setStep3(false);
+                                            document.getElementById("steamButton").innerHTML = "SIGN IN WITH STEAM"
+                                            document.getElementById("steam").classList.remove('inactiveLink');
+                                            document.getElementById("steam").classList.add('activeLink');
+
+                                            if (document.getElementById("twitch").classList.contains('activeLink')){
+                                                document.getElementById("twitch").classList.remove('activeLink');
+                                                document.getElementById("twitch").classList.add('inactiveLink');
+                                            }
+
+                                            if (document.getElementById("activate").classList.contains('activeLink')){
+                                                document.getElementById("activate").classList.remove('activeLink');
+                                                document.getElementById("activate").classList.add('inactiveLink');
+                                            }
+                                        } else {
+                                            if(twitchUser == null){
+                                                setStep2(true);
+                                                document.getElementById("twitch").classList.add('activeLink');
+                                                document.getElementById("twitch").classList.remove('inactiveLink');
+                                            } else {
+                                                setStep3(true);
+                                                document.getElementById("activate").classList.add('activeLink');
+                                                document.getElementById("activate").classList.remove('inactiveLink');
+                                            }
+                                            // setStep1(!step1);
+                                            document.getElementById("steam").classList.add('inactiveLink');
+                                            document.getElementById("steam").classList.remove('activeLink');
+                                            document.getElementById("steamButton").innerHTML = "SIGN OUT"
+                                            setSteamUser("Steam Username");
+                                        }
+                                    }}
                                     aria-controls="sign-in"
                                     aria-expanded={step1}
                                     variant="outline-*"
+                                    disabled={step1==false && steamUser==null}
                                 >
                                     <Container className="d-flex justify-content-center p-0 m-0" style={{alignItems:"center", alignItems:"center", color:"white"}}>
                                         <Image className="me-2" src="images/steamLogo.png" height="25px" width="25px"/>
-                                        <span>SIGN IN WITH STEAM</span>
+                                        {steamUser != null ?
+                                            <span id="steamButton">SIGN OUT</span>
+                                        :
+                                            <span id="steamButton">SIGN IN WITH STEAM</span>
+                                        }
                                     </Container>
                                     
                                 </Button>
                             </div>
                         </Container>
+                        {steamUser != null &&
+                            <Container>
+                                <p className="m-auto" style={{fontSize:"24px", color:"#FFF76F"}}>{steamUser}</p>
+                            </Container>
+                        }
                     </Row>
-                    <Container className="p-5 d-flex justify-content-center">
-                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
-                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
-                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
-                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
-                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
+                    <Row>
+                        <Container className="diamondContainer p-5 d-flex justify-content-center">
+                        <BsDiamondFill className="diamond ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="diamond ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="diamond ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="diamond ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="diamond ms-3 me-3" color="#FFF76F"/>
                     </Container>
-                    <Row className="">
+                    </Row>
+                    
+                    <Row className="inactiveLink p-3" id="twitch">
                         <Container>
                             <div id="link">
                                 <h4 className="pb-2"><b>Step 2</b>: Sign into your Twitch account</h4>
                                 <Button
                                     style={{backgroundColor:"#822DFF", borderRadius:"6px", height:"55px", maxWidth:"250px", width:"100%", fontFamily:"Timeless-Normal", alignItems:"center"}}
-                                    onClick={() => {setStep3(!step3)}}
-                                    aria-controls="link"
-                                    aria-expanded={step2}
                                     variant="outline-*"
-                                    disabled={!step2}
+                                    onClick={() => {
+                                        
+                                        if(document.getElementById("twitchButton").innerHTML == "SIGN OUT"){
+                                            setTwitchUser(null);
+                                            document.getElementById("twitchButton").innerHTML = "SIGN IN WITH TWITCH"
+
+                                            if (document.getElementById("steam").classList.contains('inactiveLink')){
+                                                document.getElementById("twitch").classList.remove('inactiveLink');
+                                                document.getElementById("twitch").classList.add('activeLink');
+                                                setStep2(true);
+                                            }
+
+                                            if (document.getElementById("activate").classList.contains('activeLink')){
+                                                document.getElementById("activate").classList.remove('activeLink');
+                                                document.getElementById("activate").classList.add('inactiveLink');
+                                            }   
+                                        } else {
+                                            setStep3(false);
+                                            setStep2(true);
+                                            document.getElementById("activate").classList.add('activeLink');
+                                            document.getElementById("activate").classList.remove('inactiveLink');
+                                            document.getElementById("twitch").classList.add('inactiveLink');
+                                            document.getElementById("twitch").classList.remove('activeLink');
+                                            document.getElementById("twitchButton").innerHTML = "SIGN OUT"
+                                            setTwitchUser("Twitch Username");
+                                        }
+                                                    
+                                    }}
+                                    aria-controls="sign-in"
+                                    aria-expanded={step2}
+                                    disabled={(step2==false && twitchUser==null)}
                                 >
                                     <Container className="d-flex justify-content-center p-0 m-0" style={{alignItems:"center", alignItems:"center", color:"white"}}>
                                         <Image className="me-2" src="images/twitchLogo.png" height="25px" width="25px"/>
-                                        <span>SIGN IN WITH TWITCH</span>
+                                        {twitchUser != null ?
+                                            <span id="twitchButton">SIGN OUT</span>
+                                        :
+                                            <span id="twitchButton">SIGN IN WITH TWITCH</span>
+                                        }
                                     </Container>
                                     
                                 </Button>
                             </div>
                         </Container>
+                        {twitchUser != null &&
+                            <Container>
+                                <p className="m-auto" style={{fontSize:"24px", color:"#FFF76F"}}>{twitchUser}</p>
+                            </Container>
+                        }
                     </Row>
-                    <Container className="p-5 d-flex justify-content-center">
-                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
-                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
-                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
-                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
-                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
-                    </Container>
-                    <Row className="">
+                    <Row>
+                       <Container className="diamondContainer p-5 d-flex justify-content-center">
+                        <BsDiamondFill className="diamond ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="diamond ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="diamond ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="diamond ms-3 me-3" color="#FFF76F"/>
+                        <BsDiamondFill className="diamond ms-3 me-3" color="#FFF76F"/>
+                    </Container> 
+                    </Row>
+                    <Row className={isLinked ? "activeLink p-3" : "inactiveLink p-3"} id="activate">
                         <Container>
                             <div in="activate">
                                 <h4 className="pb-2"><b>Step 3</b>: Activate Twitch Drops</h4>
                                 <Button
                                 style={{borderRadius:"6px", height:"55px", maxWidth:"250px", width:"100%", fontFamily:"Timeless-Normal"}}
-                                onClick={() => {setFinal(!final)}}
+                                onClick={() => {
+                                    if (document.getElementById("activateButton").innerHTML == "UNLINK ACCOUNTS"){
+                                        document.getElementById("steam").classList.add('activeLink');
+                                        document.getElementById("steam").classList.remove('inactiveLink');
+                                        document.getElementById("activate").classList.add('inactiveLink');
+                                        document.getElementById("activate").classList.remove('activeLink');
+                                        document.getElementById("steamButton").innerHTML = "SIGN IN WITH STEAM";
+                                        document.getElementById("twitchButton").innerHTML = "SIGN IN WITH TWITCH";
+                                        document.getElementById("activateButton").innerHTML = "ACTIVATE DROPS";
+                                        setSteamUser(null);
+                                        setTwitchUser(null);
+                                        setIsLinked(false);
+                                        setStep3(false);
+                                        setStep2(false);
+                                        setStep1(true);
+                                    } else {
+                                        document.getElementById("activateButton").innerHTML = "UNLINK ACCOUNTS";
+                                        setIsLinked(true);
+                                        window.scrollTo(0, 0);
+                                    }
+                                }}
                                 aria-controls="activate"
                                 aria-expanded={step3}
-                                disabled={!step3}
+                                disabled={twitchUser == null || steamUser == null}
                                 >
-                                    ACTIVATE DROPS
+                                    {isLinked ?
+                                        <span id="activateButton">UNLINK ACCOUNTS</span>
+                                    :
+                                        <span id="activateButton">ACTIVATE DROPS</span>
+                                    }
                                 </Button>
-                                </div>
-                        </Container>
-                    </Row>
-                    {/* <Container className="p-5 d-flex justify-content-center">
-                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
-                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
-                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
-                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
-                        <BsDiamondFill className="ms-3 me-3" color="#FFF76F"/>
-                    </Container> */}
-                    {/* <Row className="">
-                        <Container>
-                            <div in="final">
-                                <h4>Congratulations, Project Winter Twitch Drops have been activated on your account!</h4>
                             </div>
                         </Container>
-                    </Row> */}
+                    </Row>
                 </Container>
             </Container>
             <Footer />

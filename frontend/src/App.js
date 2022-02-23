@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
-import { Container, Row, Image, CardGroup, Card, Carousel } from 'react-bootstrap';
+import { Container, Row, Image, CardGroup, Card, Button} from 'react-bootstrap';
 import { BsFillClockFill, BsDiamondFill } from "react-icons/bs"; 
 import { Current, Past, Future, FAQS, Accounts, CountDownDisplay } from "./pages";
 import CardHeader from 'react-bootstrap/esm/CardHeader';
@@ -13,6 +13,9 @@ function App() {
   const [pastDrops, setPastDrops] = useState(null);
   const [futureDrops, setFutureDrops] = useState(null);
   const [faqs, setFAQS] = useState([]);
+  const [isLinked, setIsLinked] = useState(false);
+  const [steamUser, setSteamUser] = useState(null);
+  const [twitchUser, setTwitchUser] = useState(null);
 
   useEffect(() => {
     fetch('/api/currentTwitchDrops')
@@ -38,6 +41,12 @@ function App() {
       .then(setFAQS)
   }, []);
 
+  useEffect(() => {
+    if((twitchUser == null) || (steamUser == null)){
+      setIsLinked(false);
+    }
+  }, [twitchUser, steamUser]);
+
   
   const [timeLeft, setTimeLeft] = useState(null);
   useEffect(() => {
@@ -60,7 +69,9 @@ function App() {
           <Route path="/pastdrops" element={<Past pastDrops={pastDrops}/>}/>
           <Route path="/futureDrops" element={<Future futureDrops={futureDrops}/>}/>
           <Route path="/faq" element={<FAQS faqs={faqs}/>}/>
-          <Route path="/linkaccounts" element={<Accounts />} />
+          <Route path="/linkaccounts" element={<Accounts isLinked={isLinked} steamUser={steamUser} twitchUser={twitchUser}
+            setIsLinked={setIsLinked} setSteamUser={setSteamUser} setTwitchUser={setTwitchUser}/>} 
+          />
         </Routes>
       </Container>
     </div>
@@ -68,8 +79,6 @@ function App() {
     }
 
 const calculateTimeLeft = (twitchDrops) => {
-  // console.log(twitchDrops[0].end_date)
-  //console.log(twitchDrops)
   let timeLeft = {};
   if(twitchDrops.length == 0){
     timeLeft = {days: "00",
@@ -92,7 +101,7 @@ const calculateTimeLeft = (twitchDrops) => {
     return timeLeft;
 }
 
-export function calculateToEventStart(startDate){
+export function calculateTimeRemaining(startDate){
 let timeLeft = {};
 if(startDate.length == 0){
   timeLeft = {days: "00",
@@ -123,6 +132,7 @@ function addZero(time){
 }
     
 export function TwitchDrops(props) {
+  // console.log("status:" + props.eventStatus);
   return (
     <Container>
       <CardGroup className="dropCard">
@@ -131,9 +141,25 @@ export function TwitchDrops(props) {
             <Card.Title className="p-2 text-light dropCardHeader">{(props.info.item_name).toUpperCase()}</Card.Title>
             <Card.Img variant="top" src={props.info.item_icon} />
             <Card.Text className="d-flex justify-content-center m-auto pt-2">
-              <BsFillClockFill className="m-auto ms-0 me-0 pe-1" color="rgba(43, 36, 82, 0.75)" size="30px"/>
-              <span className="m-auto ms-0 me-0">Watch Time: {props.info.unlock_condition}</span>
+              <BsFillClockFill className="m-auto ms-0 me-0 pe-1" color="rgba(43, 36, 82, 0.75)" size="25px"/>
+              <span className="m-auto ms-0 me-0" style={{color:"#2B2452"}}>{props.info.unlock_condition}</span>
             </Card.Text>
+            {props.eventStatus === "current" && (
+              <Card.Text className="d-flex justify-content-center m-auto pt-2">
+                
+                  <Button
+                    style={{backgroundColor:"#822DFF", borderRadius:"6px", height:"55px", maxWidth:"250px", width:"100%", fontFamily:"Timeless-Normal", alignItems:"center"}}
+                    variant="outline-*"
+                    onClick = {() => window.location.href = props.info.streamer_account}
+                  >
+                    <Container className="d-flex justify-content-center p-0 m-0" style={{alignItems:"center", alignItems:"center", color:"white"}}>
+                        <Image className="me-2" src="images/twitchLogo.png" height="25px" width="25px"/>
+                        <span style={{fontSize:"18px"}}>{props.info.streamer_name}</span>
+                    </Container>
+                  </Button>
+             
+              </Card.Text>
+            )}
           </Card.Body>
          </Card>
       </CardGroup>
@@ -142,17 +168,41 @@ export function TwitchDrops(props) {
 }
 
 export function Events(props){
-  let timeLeft = calculateToEventStart(props.info.start_date);
+  let today = new Date();
+  let timeLeft = null;
+  let startDate = new Date(props.info.start_date);
+  let endDate = new Date(props.info.end_date);
+  let eventStatus = "";
+
+  // console.log(props.info.name + ": " + startDate + " - " + endDate);
+
+  if ((new Date(props.info.start_date) <= today) && (new Date(props.info.end_date) >= today)){
+    timeLeft = calculateTimeRemaining(props.info.end_date)
+    eventStatus = "current";
+  } else {
+    if (Math.floor((new Date(props.info.start_date) - today)/ (1000 * 60 * 60 * 24)) <= 999){
+      timeLeft = calculateTimeRemaining(props.info.start_date);
+    }
+  }
+
+  // console.log("timeleft: " + timeLeft);
   
   return(
       <Container className="p-5 mb-2 rounded-3">
         <Row className="rounded-3 pt-3 pb-3 g-4 m-auto mb-3 justify-content-center" style={{backgroundColor:"rgba(0, 0, 0, 0.5)", color:"white", fontSize:"20px", fontFamily:"Timeless-Normal"}}>
           <p className="m-auto" style={{fontSize:"35px", color:"#FFF76F"}}>{(props.info.name).toUpperCase()}</p>
           <p className="m-auto"><BsDiamondFill color="#FFF76F"/> {props.info.start_date} - {props.info.end_date} <BsDiamondFill color="#FFF76F"/></p>
-          {timeLeft != null && <CountDownDisplay timeLeft={timeLeft}/>}    
+          {timeLeft != null && (
+            <>
+              {((new Date(props.info.start_date) <= today) && (new Date(props.info.end_date) >= today)) ? 
+              <p style={{fontSize:"24px", color:"#FFF76F"}}>Event Ends In:</p> : <p style={{fontSize:"24px", color:"#FFF76F"}}>Event Begins In:</p>
+              }
+              <CountDownDisplay timeLeft={timeLeft}/>
+            </>
+          )}    
         </Row>
         <Row xs={1} md={3} className="g-4 justify-content-center">
-          { props.info.drops.map((twitchDrop, i) => { return <TwitchDrops key={i} info={twitchDrop} />}) }   
+          { props.info.drops.map((twitchDrop, i) => { return <TwitchDrops key={i} info={twitchDrop} eventStatus={eventStatus}/>}) }   
         </Row>
       </Container>
   )
