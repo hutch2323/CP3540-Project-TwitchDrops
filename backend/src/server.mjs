@@ -1,14 +1,10 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { MongoClient } from 'mongodb';
-import { request } from 'http';
-import multer from 'multer';
 import { Guid } from 'guid-factory'
-import { start } from 'repl';
 
 /* 
 DB Name: TwitchDropsApp
@@ -18,30 +14,11 @@ Collections: twitchDrops, faqs, apiKeys
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// let dropData = undefined;
-// fs.readFile("./data/RewardsDummyData.json", "utf8", (err, data) => {
-//     console.log(err)
-//     console.log(data)
-//     dropData = data;
-// });
-
-// let faqData = undefined;
-// fs.readFile("./data/faqs.json", "utf8", (err, data) => {
-//     console.log(err)
-//     console.log(faqData)
-//     faqData = data;
-// });
-
 const app = express();
 app.use(express.static(path.join(__dirname, '/build')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
-
-app.get('/api/generateKey', async (req, res) => {
-    const myID = Guid.newGuid();
-    res.send(myID);
-});
 
 // function that will check database for match of api key
 const isValidKey = async(apiKey) => {
@@ -66,10 +43,10 @@ const isValidMasterKey = async(apiKey) => {
     try{
         const client = await MongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true})
         const db = client.db("TwitchDropsApp");
-        const key = await db.collection('masterKeys').find({apiKey}).toArray();
+        const key = await db.collection('masterKeys').find({apiKey:apiKey}).toArray();
         client.close();
 
-        if (key.length > 1){
+        if (key.length > 0){
             return true;
         } else {
             return false;
@@ -92,6 +69,12 @@ const getAllDrops = async () => {
         return [];
     }
 }
+
+// GET API route that will generate and return a GUID key. This key will not be added as an API key until done manually
+app.get('/api/generateKey', async (req, res) => {
+    const myID = Guid.newGuid();
+    res.send(myID);
+});
 
 // GET API route to grab current twitch drops
 app.get('/api/currentTwitchDrops', async (req, res) => {
@@ -211,9 +194,10 @@ app.put('/api/updateFAQ', async (req, res) => {
 });
 
 // Route used to add APIKeys. Masterkey made avaialable so other people working on project can initialize their databases.
-// Should be hidden, but revealed for the purpose of development. Once masterkey is added to db, can comment out first two lines
+// Should be hidden, but can be revealed for the purpose of development or local installation. Once masterkey is added to db, 
+// can comment out first two lines
 app.post('/api/addAPIKey', async (req, res) => {
-    // unquote these first two lines and quote out the 3rd if no masterkey exists in the database
+    // unquote these first two lines of code and quote out the 3rd if no masterkey exists in the database. Then use masterKey as auth API
     // const masterKey = "ef72570ff371408f9668e414353b7b2e";
     // if (req.headers.apikey == masterKey) {
     if (await isValidMasterKey(req.headers.apikey)){
@@ -276,6 +260,27 @@ app.post('/api/overwriteFAQS', async (req, res) => {
         res.status(500).json({message: "Invalid API Key"});
     }
     
+});
+
+// POST API route to delete an API key. Master key must be set up for this route to work
+app.post('/api/removeApiKey', async (req, res) => {
+    if (await isValidMasterKey(req.headers.apikey)){
+        try{
+            // key = req.body.apiKey;
+            // console.log(key);
+            const client = await MongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true})
+            const db = client.db("TwitchDropsApp");
+
+            let deletedKey = await db.collection("apiKeys").deleteOne({apiKey: req.body.apiKey});
+            res.status(200).json({message: "success", apiKey: deletedKey});
+            client.close();
+        }
+        catch (error) {
+            res.status(500).json({message: "Error connceting to db", error});
+        }
+    } else {
+        res.status(500).json({message: "Invalid API Key"});
+    }
 });
 
 app.get('*', (req, res) => { res.sendFile(path.join(__dirname + '/build/index.html'))})

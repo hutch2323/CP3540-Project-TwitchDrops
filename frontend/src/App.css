@@ -99,10 +99,13 @@
 }
 
 .streamButton{
-  background:url('../public/images/coachStock.png'); 
-  background-Size:100% 100% !important;
-  width:100%;
-  height:75px
+  background-Color: #822DFF !important;
+  border-Radius: 6px;
+  height: 55px;
+  max-Width: 250px; 
+  width: 100%;
+  font-Family: "Timeless-Normal";
+  align-Items: center
 }
 
 .dropCard{
@@ -158,6 +161,83 @@
 
 .inactiveLink{
   color: #746D6D;
+}
+
+.currentDrops {
+  background:url('../public/images/websitebg.png');
+  background-position: center !important;
+  background-Repeat: no-repeat; 
+  background-Attachment: fixed !important;
+  background-Size: cover !important;
+}
+
+.pastDrops {
+  background:url('../public/images/wood-chopping.png');
+  background-position: center !important;
+  background-Repeat: no-repeat; 
+  background-Attachment: fixed !important;
+  background-Size: cover !important;
+}
+
+.futureDrops {
+  background:url('../public/images/hunting.png');
+  background-position: center !important;
+  background-Repeat: no-repeat; 
+  background-Attachment: fixed !important;
+  background-Size: cover !important;
+}
+
+.faq{
+  background:url('../public/images/camp-fire.png');
+  background-position: center !important;
+  background-Repeat: no-repeat; 
+  background-Attachment: fixed !important;
+  background-Size: cover !important;
+}
+
+.linkAccounts{
+  background:url('../public/images/background_store.jpg');
+  background-position: center;
+  background-Repeat: no-repeat; 
+  background-Attachment: fixed !important;
+  background-Size: cover !important;
+}
+
+.question{
+  background:url('../public/images/main-image-alpha-snow.png'); 
+  background-Size:100% 100% !important; 
+  vertical-Align:middle
+}
+
+.accordion-button{
+  background: rgba(0, 0, 0, 0) !important;
+}
+
+.accordion-item{
+  background-color: rgba(0, 0, 0, 0) !important;
+  border: 0px !important;
+}
+
+.accordion-button{
+  color: rgba(0, 0, 0, 0) !important;
+  box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 0%) !important;;
+  border-color: rgba(0, 0, 0, 0) !important;
+}
+
+.accordion-button {
+  border: 0px;
+  border-color: rgba(0, 0, 0, 0) !important;
+  box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 0%) !important;
+  background-image: url('') !important;
+  
+}
+
+.accordion-button::after{
+  opacity: 0 !important;
+}
+
+.accordion-body {
+  padding: 1rem 3rem !important;
 }
 
 @media only screen and (max-width: 575px) {
