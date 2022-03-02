@@ -3,6 +3,10 @@ import { Container, Navbar, Nav, Row, Col, Image, Collapse, Button, Carousel } f
 import { LinkContainer } from 'react-router-bootstrap';
 import { FAQ, Events, } from './App';
 import { BsDiamondFill } from 'react-icons/bs';
+import { useSearchParams } from "react-router-dom";
+import { useToken } from './auth/useToken';
+import { useNavigate } from 'react-router-dom';
+import { Buffer } from 'buffer';
 
 export function Current({twitchDrops=[], timeLeft=[]}) {
     return (
@@ -206,6 +210,123 @@ export function FAQS({faqs=[]}) {
 }
 
 export function Accounts({isLinked=false, twitchUser=null, steamUser=null, setIsLinked, setTwitchUser, setSteamUser}) {
+    const history = useNavigate()
+  const [twitchOauthURL, setTwitchOauthURL] = useState('');
+  const [steamAuthURL, setSteamAuthURL] = useState('');
+
+  const localStoreToken = localStorage.getItem("token");
+  console.log(localStoreToken );
+  
+  const [searchParams] = useSearchParams();
+  const tokenQueryParam = searchParams.get("token");
+  const steamIdQueryParam = searchParams.get("openid.claimed_id");
+  console.log(steamIdQueryParam);
+  
+  useEffect(() => {
+    if( steamIdQueryParam ) {
+      let lastSlashCharPos = steamIdQueryParam.lastIndexOf("/");
+      let steamid = steamIdQueryParam.substr(lastSlashCharPos+1);
+      console.log(steamid);
+      fetch('/api/auth/steam', { 
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify( {usr: getPayloadFromToken(token), steamid: steamid}),
+      })
+      .then((response) => response.json())
+      .then((jsonData) => { 
+        console.log(jsonData);
+        if( jsonData.token) {
+          localStorage.setItem('token', jsonData.token);
+          setToken(jsonData.token);
+        }
+        history('/linkaccounts');
+      })
+      .catch(e => {
+        console.log(e);
+      })
+    }
+  }, []);
+  
+  const getPayloadFromToken = token => {
+    const encodedPayload = token.split('.')[1];
+    const buff = Buffer.from(encodedPayload, 'base64');
+    const text = buff.toString('ascii');
+    return JSON.parse(text);
+  }
+
+  const [token, setToken] = useToken();
+
+  useEffect(() => {
+    if( tokenQueryParam ) {
+      localStorage.setItem('token', tokenQueryParam);
+      const queryParams = new URLSearchParams(window.location.search)
+      queryParams.delete('token')
+      history('/linkaccounts');
+      setToken(tokenQueryParam);
+    }
+  }, []);
+  
+  
+  useEffect(() => {
+      fetch('/auth/twitch/url')
+      .then((response) => response.json())
+      .then(setTwitchOauthURL)
+  }, []);
+
+  useEffect(() => {
+    fetch('/auth/steam/url')
+    .then((response) => response.json())
+    .then(setSteamAuthURL)
+}, []);
+
+
+  const logoutSteam = () => {
+    fetch('/auth/steam/logout', { 
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify( {usr: getPayloadFromToken(token)}),
+    })
+    .then((response) => response.json())
+    .then((jsonData) => { 
+      console.log(jsonData);
+      if( jsonData.token ) {
+        localStorage.setItem('token', jsonData.token);
+        setToken(jsonData.token);
+      }
+      else {
+        localStorage.removeItem('token');
+        setToken(null);
+      }
+    })
+    .catch(e => {
+        console.log(e);
+      })
+  }
+
+  const logoutTwitch = () => {
+    fetch('/auth/twitch/logout', { 
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify( {usr: getPayloadFromToken(token)}),
+    })
+      .then((response) => { 
+        if( response.ok) { 
+            localStorage.removeItem('token');
+           setToken(null)
+        }
+      })
+      .catch(e => {
+        console.log(e);
+      })
+  }
+    
+    
     const [step1, setStep1] = useState(true);
     const [step2, setStep2] = useState(false);
     const [step3, setStep3] = useState(false);
@@ -221,6 +342,7 @@ export function Accounts({isLinked=false, twitchUser=null, steamUser=null, setIs
 
     return (
         <>
+        
             <Container fluid>
                 <Row>
                     <Title />
@@ -238,6 +360,8 @@ export function Accounts({isLinked=false, twitchUser=null, steamUser=null, setIs
                         <Image src="images/twitchDropsActivated.png" width="100%" style={{maxWidth:"800px"}}/>
                     }
                 </Container>
+
+                
                 <Container fluid className="mt-5" style={{ padding:"20px", backgroundColor:"rgb(43, 36, 82, 0.75)"}}>
                     <Image src="images/linkAccounts.png" width="100%" style={{maxWidth:"800px"}}/>
                 </Container>  
@@ -245,59 +369,14 @@ export function Accounts({isLinked=false, twitchUser=null, steamUser=null, setIs
                     <Row className={!isLinked && steamUser==null ? "activeLink p-3" : "inactiveLink p-3"} id="steam">
                         <Container>
                             <div id="sign-in">
-                                <h4 className="pb-2"><b style={{color:""}}>Step 1</b>: Sign in to your Steam account</h4>
-                                <Button
-                                    style={{backgroundColor:"#1B2C43", borderRadius:"6px", height:"55px", maxWidth:"250px", width:"100%", fontFamily:"Timeless-Normal", alignItems:"center"}}
-                                    onClick={() => {
-                                        if(document.getElementById("steamButton").innerHTML == "SIGN OUT"){
-                                            setSteamUser(null);                                            
-                                            setStep2(false);                                            
-                                            setStep3(false);
-                                            document.getElementById("steamButton").innerHTML = "SIGN IN WITH STEAM"
-                                            document.getElementById("steam").classList.remove('inactiveLink');
-                                            document.getElementById("steam").classList.add('activeLink');
-
-                                            if (document.getElementById("twitch").classList.contains('activeLink')){
-                                                document.getElementById("twitch").classList.remove('activeLink');
-                                                document.getElementById("twitch").classList.add('inactiveLink');
-                                            }
-
-                                            if (document.getElementById("activate").classList.contains('activeLink')){
-                                                document.getElementById("activate").classList.remove('activeLink');
-                                                document.getElementById("activate").classList.add('inactiveLink');
-                                            }
-                                        } else {
-                                            if(twitchUser == null){
-                                                setStep2(true);
-                                                document.getElementById("twitch").classList.add('activeLink');
-                                                document.getElementById("twitch").classList.remove('inactiveLink');
-                                            } else {
-                                                setStep3(true);
-                                                document.getElementById("activate").classList.add('activeLink');
-                                                document.getElementById("activate").classList.remove('inactiveLink');
-                                            }
-                                            // setStep1(!step1);
-                                            document.getElementById("steam").classList.add('inactiveLink');
-                                            document.getElementById("steam").classList.remove('activeLink');
-                                            document.getElementById("steamButton").innerHTML = "SIGN OUT"
-                                            setSteamUser("Steam Username");
-                                        }
-                                    }}
-                                    aria-controls="sign-in"
-                                    aria-expanded={step1}
-                                    variant="outline-*"
-                                    disabled={step1==false && steamUser==null}
-                                >
-                                    <Container className="d-flex justify-content-center p-0 m-0" style={{alignItems:"center", alignItems:"center", color:"white"}}>
-                                        <Image className="me-2" src="images/steamLogo.png" height="25px" width="25px"/>
-                                        {steamUser != null ?
-                                            <span id="steamButton">SIGN OUT</span>
-                                        :
-                                            <span id="steamButton">SIGN IN WITH STEAM</span>
-                                        }
-                                    </Container>
-                                    
-                                </Button>
+                           
+                                
+                                <h4 className="pb-2"><b style={{color:""}}>Step 1</b>: Sign in to your Twitch account</h4>
+                                <button disabled={!twitchOauthURL} 
+        onClick={() => {
+          token != null ? logoutTwitch()
+          : window.location.href = twitchOauthURL.url }}
+      >{token != null ? `${getPayloadFromToken(token).display_name} :logout` : "Login to Twitch"}</button>
                             </div>
                         </Container>
                         {steamUser != null &&
@@ -316,55 +395,16 @@ export function Accounts({isLinked=false, twitchUser=null, steamUser=null, setIs
                     </Container>
                     </Row>
                     
-                    <Row className="inactiveLink p-3" id="twitch">
+                    <Row className="p-3" id="twitch">
                         <Container>
                             <div id="link">
-                                <h4 className="pb-2"><b>Step 2</b>: Sign into your Twitch account</h4>
-                                <Button
-                                    style={{backgroundColor:"#822DFF", borderRadius:"6px", height:"55px", maxWidth:"250px", width:"100%", fontFamily:"Timeless-Normal", alignItems:"center"}}
-                                    variant="outline-*"
-                                    onClick={() => {
-                                        
-                                        if(document.getElementById("twitchButton").innerHTML == "SIGN OUT"){
-                                            setTwitchUser(null);
-                                            document.getElementById("twitchButton").innerHTML = "SIGN IN WITH TWITCH"
-
-                                            if (document.getElementById("steam").classList.contains('inactiveLink')){
-                                                document.getElementById("twitch").classList.remove('inactiveLink');
-                                                document.getElementById("twitch").classList.add('activeLink');
-                                                setStep2(true);
-                                            }
-
-                                            if (document.getElementById("activate").classList.contains('activeLink')){
-                                                document.getElementById("activate").classList.remove('activeLink');
-                                                document.getElementById("activate").classList.add('inactiveLink');
-                                            }   
-                                        } else {
-                                            setStep3(false);
-                                            setStep2(true);
-                                            document.getElementById("activate").classList.add('activeLink');
-                                            document.getElementById("activate").classList.remove('inactiveLink');
-                                            document.getElementById("twitch").classList.add('inactiveLink');
-                                            document.getElementById("twitch").classList.remove('activeLink');
-                                            document.getElementById("twitchButton").innerHTML = "SIGN OUT"
-                                            setTwitchUser("Twitch Username");
-                                        }
-                                                    
-                                    }}
-                                    aria-controls="sign-in"
-                                    aria-expanded={step2}
-                                    disabled={(step2==false && twitchUser==null)}
-                                >
-                                    <Container className="d-flex justify-content-center p-0 m-0" style={{alignItems:"center", alignItems:"center", color:"white"}}>
-                                        <Image className="me-2" src="images/twitchLogo.png" height="25px" width="25px"/>
-                                        {twitchUser != null ?
-                                            <span id="twitchButton">SIGN OUT</span>
-                                        :
-                                            <span id="twitchButton">SIGN IN WITH TWITCH</span>
-                                        }
-                                    </Container>
-                                    
-                                </Button>
+                                <h4 className="pb-2"><b>Step 2</b>: Sign into your Steam account</h4>
+                                <button disabled={token == null || !steamAuthURL}
+        onClick={() => {
+          token != null && getPayloadFromToken(token).steamid != null ? logoutSteam()
+          : window.location.href = steamAuthURL.url //</div>"https://steamcommunity.com/openid/login?openid.ns=http://specs.openid.net/auth/2.0&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.return_to=https://localhost:4000%2Fapi%2Fauth%2Fsteam&openid.realm=https://localhost:4000&openid.mode=checkid_setup";
+        }}
+      >{token != null && getPayloadFromToken(token).steamid ? `${getPayloadFromToken(token).steamid} :logout` : "Login to Steam"}</button>
                             </div>
                         </Container>
                         {twitchUser != null &&
@@ -383,44 +423,7 @@ export function Accounts({isLinked=false, twitchUser=null, steamUser=null, setIs
                     </Container> 
                     </Row>
                     <Row className={isLinked ? "activeLink p-3" : "inactiveLink p-3"} id="activate">
-                        <Container>
-                            <div in="activate">
-                                <h4 className="pb-2"><b>Step 3</b>: Activate Twitch Drops</h4>
-                                <Button
-                                style={{borderRadius:"6px", height:"55px", maxWidth:"250px", width:"100%", fontFamily:"Timeless-Normal"}}
-                                onClick={() => {
-                                    if (document.getElementById("activateButton").innerHTML == "UNLINK ACCOUNTS"){
-                                        document.getElementById("steam").classList.add('activeLink');
-                                        document.getElementById("steam").classList.remove('inactiveLink');
-                                        document.getElementById("activate").classList.add('inactiveLink');
-                                        document.getElementById("activate").classList.remove('activeLink');
-                                        document.getElementById("steamButton").innerHTML = "SIGN IN WITH STEAM";
-                                        document.getElementById("twitchButton").innerHTML = "SIGN IN WITH TWITCH";
-                                        document.getElementById("activateButton").innerHTML = "ACTIVATE DROPS";
-                                        setSteamUser(null);
-                                        setTwitchUser(null);
-                                        setIsLinked(false);
-                                        setStep3(false);
-                                        setStep2(false);
-                                        setStep1(true);
-                                    } else {
-                                        document.getElementById("activateButton").innerHTML = "UNLINK ACCOUNTS";
-                                        setIsLinked(true);
-                                        window.scrollTo(0, 0);
-                                    }
-                                }}
-                                aria-controls="activate"
-                                aria-expanded={step3}
-                                disabled={twitchUser == null || steamUser == null}
-                                >
-                                    {isLinked ?
-                                        <span id="activateButton">UNLINK ACCOUNTS</span>
-                                    :
-                                        <span id="activateButton">ACTIVATE DROPS</span>
-                                    }
-                                </Button>
-                            </div>
-                        </Container>
+                        
                     </Row>
                 </Container>
             </Container>
