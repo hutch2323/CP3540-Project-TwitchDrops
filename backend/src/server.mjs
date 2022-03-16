@@ -65,7 +65,7 @@ const generatePlayfabEntityToken = async () => {
     return entityTokenJson.data.EntityToken;
 }
 var PLAYFAB_ENTITY_TOKEN = await generatePlayfabEntityToken();
-const SERVER_URL = 'https://localhost:4000';
+const SERVER_URL = 'https://3.14.82.33:4000';
 const checkRewards = async () => {
     console.log("check users for rewards");
     const client = await MongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true});
@@ -145,6 +145,7 @@ const checkRewards = async () => {
             }
         }
     })
+    client.close();
 }
 
 setInterval(checkRewards, 60000);
@@ -183,6 +184,7 @@ app.post('/auth/steam/logout',async (req, res) => {
     else {
         res.status(200).json({});
     }
+    client.close();
 });
 
 app.post('/auth/twitch/logout',async (req, res) => {
@@ -190,6 +192,7 @@ app.post('/auth/twitch/logout',async (req, res) => {
     const client = await MongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true});
     const db = client.db('twitch');
     const result = await db.collection('users').deleteOne({id: id});
+    client.close();
     res.status(200).json({"hello":5});
 });
 
@@ -270,7 +273,7 @@ app.post('/api/auth/steam', async (req, res) => {
 app.get('/auth/twitch/callback', async (req, res) => {
     const { code } = req.query;
     try {
-        const token = await getTwitchToken(code);
+	const token = await getTwitchToken(code)
         const userJsonData = await getUserInfo(token.access_token)
         const userResult = await updateOrCreateUserFromOauth(userJsonData.data[0], token);
         const { id, display_name } = userResult;
@@ -294,7 +297,7 @@ const isValidKey = async(apiKey) => {
     try{
         const client = await MongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true})
         const db = client.db("TwitchDropsApp");
-        const key = await db.collection('apiKeys').find({apiKey}).toArray();
+        const key = await db.collection('apiKeys').find({key: apiKey}).toArray();
         client.close();
 
         if (key.length > 0){
